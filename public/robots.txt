@@ -1,0 +1,6 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap URL
+Sitemap: https://kgtolbsconverter.org/sitemap.xml

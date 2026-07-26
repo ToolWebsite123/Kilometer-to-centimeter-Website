@@ -1,0 +1,148 @@
+.chartCard {
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.titleGroup {
+  max-width: 600px;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  margin-bottom: 0;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.searchField {
+  padding: 0.4rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  width: 160px;
+}
+
+.searchField:focus {
+  outline: none;
+  border-color: var(--brass);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table th {
+  background: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.table td {
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.table tr:nth-child(even) {
+  background: var(--paper-subtle);
+}
+
+.table tr:hover {
+  background: #ede8db;
+}
+
+.unitCell {
+  color: var(--brass);
+  font-size: 0.8rem;
+  margin-left: 0.25rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
+.pageButtons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.pageBtn {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  padding: 0.3rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.pageBtn:hover {
+  background: var(--moss);
+  color: #ffffff;
+}
+
+.pageBtnActive {
+  background: var(--moss);
+  color: #ffffff;
+  border-color: var(--moss);
+}
+
+@media (max-width: 640px) {
+  .chartCard {
+    padding: 1rem;
+  }
+
+  .table td, .table th {
+    padding: 0.5rem 0.75rem;
+  }
+}
