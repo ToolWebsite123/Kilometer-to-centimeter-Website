@@ -34,6 +34,18 @@ export default function AboutPage() {
           <li><strong>Privacy First:</strong> All conversions execute locally in your web browser. No user data or weight inputs are transmitted or logged.</li>
         </ul>
 
+        <h2>Definitions & Historical Background</h2>
+        
+        <h3>History & Definition of the Kilogram</h3>
+        <p>
+          The kilogram (symbol: kg) is the base unit of mass in the International System of Units (SI). Originally defined in 1795 as the mass of one liter of pure water at its freezing point, it was later standardized by the International Prototype Kilogram (IPK) platinum-iridium cylinder stored in France in 1889. In May 2019, the General Conference on Weights and Measures officially redefined the kilogram in terms of fundamental physical constants, anchoring its exact magnitude directly to Planck&apos;s constant (6.62607015 × 10⁻³⁴ J·s).
+        </p>
+
+        <h3>History & Definition of the Pound</h3>
+        <p>
+          The avoirdupois pound (symbol: lb) is a unit of mass used primarily in the United States and the United Kingdom. Originating from ancient Roman weight standards (the <em>libra</em>) and modified through medieval English trade, its definition varied across countries for centuries. On July 1, 1959, the International Yard and Pound Agreement formally standardized the avoirdupois pound as legally equal to exactly 0.45359237 kilograms worldwide.
+        </p>
+
         <h2>Contact & Inquiries</h2>
         <p>
           For suggestions, metrology inquiries, or feedback regarding our calculations, please visit our main tool or explore our reference guides.
@@ -46,3 +58,4 @@ export default function AboutPage() {
     </div>
   );
 }
+

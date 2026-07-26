@@ -1,0 +1,29 @@
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.linkCard {
+  display: block;
+  padding: 0.85rem 1rem;
+  background: var(--paper-subtle);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--moss);
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+}
+
+.linkCard:hover {
+  background: var(--paper-card);
+  border-color: var(--brass);
+  color: var(--brass);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(181, 137, 43, 0.08);
+}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Converter from "@/components/Converter";
 import ConversionChart from "@/components/ConversionChart";
+import PopularConversions from "@/components/PopularConversions";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -47,9 +48,13 @@ export default function Guide1KgPage() {
         subtitle="Step-by-step conversion table for the first 20 kilograms."
       />
 
+      {/* Popular Weight & Mass Conversions */}
+      <PopularConversions />
+
       <p style={{ marginTop: "2rem" }}>
         ← <Link href="/">Return to Main Kg to Lbs Converter</Link>
       </p>
     </div>
   );
 }
+

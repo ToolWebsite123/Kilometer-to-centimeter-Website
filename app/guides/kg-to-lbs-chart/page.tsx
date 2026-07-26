@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Converter from "@/components/Converter";
 import ConversionChart from "@/components/ConversionChart";
+import PopularConversions from "@/components/PopularConversions";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -42,9 +43,13 @@ export default function GuideChartPage() {
         </ul>
       </section>
 
+      {/* Popular Weight & Mass Conversions */}
+      <PopularConversions />
+
       <p style={{ marginTop: "2rem" }}>
         ← <Link href="/">Return to Main Kg to Lbs Converter</Link>
       </p>
     </div>
   );
 }
+

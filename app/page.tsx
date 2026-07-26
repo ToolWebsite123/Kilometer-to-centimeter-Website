@@ -1,6 +1,7 @@
 import Converter from "@/components/Converter";
 import ConversionChart from "@/components/ConversionChart";
 import FAQSection from "@/components/FAQSection";
+import PopularConversions from "@/components/PopularConversions";
 import styles from "./page.module.css";
 
 export default function HomePage() {
@@ -32,8 +33,12 @@ export default function HomePage() {
       {/* Reference Conversion Table */}
       <ConversionChart startKg={1} endKg={100} step={1} />
 
+      {/* Popular Weight & Mass Conversions */}
+      <PopularConversions />
+
       {/* FAQ Section with JSON-LD Schema */}
       <FAQSection />
     </div>
   );
 }
+

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { unitPairs } from "@/lib/unit-pairs";
 import Converter from "@/components/Converter";
 import ConversionChart from "@/components/ConversionChart";
-import styles from "./page.module.css";
+import PopularConversions from "@/components/PopularConversions";
 
 interface PageProps {
   params: {
@@ -48,8 +48,6 @@ export default function ConvertPage({ params }: PageProps) {
   if (!pair) {
     notFound();
   }
-
-  const otherPairs = unitPairs.filter((p) => p.slug !== pair.slug);
 
   return (
     <div className="container">
@@ -99,21 +97,7 @@ export default function ConvertPage({ params }: PageProps) {
       />
 
       {/* Other Conversions Section */}
-      <section className="editorial-card" style={{ marginTop: "2.5rem" }}>
-        <h2>Popular Weight & Mass Conversions</h2>
-        <p>Select another pair from our popular conversion lists:</p>
-        <div className={styles.linksGrid}>
-          {otherPairs.map((other) => (
-            <Link
-              key={other.slug}
-              href={`/convert/${other.slug}`}
-              className={styles.linkCard}
-            >
-              {other.fromLabel} to {other.toLabel}
-            </Link>
-          ))}
-        </div>
-      </section>
+      <PopularConversions currentSlug={pair.slug} />
 
       <p style={{ marginTop: "2rem" }}>
         ← <Link href="/">Return to Main Weight Converter</Link>
@@ -121,3 +105,4 @@ export default function ConvertPage({ params }: PageProps) {
     </div>
   );
 }
+

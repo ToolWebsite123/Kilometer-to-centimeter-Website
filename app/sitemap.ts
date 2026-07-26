@@ -1,9 +1,10 @@
 import { MetadataRoute } from "next";
 import { unitPairs } from "@/lib/unit-pairs";
+import { getScaledValues } from "@/lib/scale-values";
 
 /**
- * Dynamic Sitemap Generator
- * Automatically lists all website routes for search engine indexing.
+ * Dynamic Sitemap Generator for Static Export
+ * Includes static routes, /convert/[slug] pages, and all scale pages.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://kgtolbsconverter.org";
@@ -42,13 +43,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const dynamicRoutes: MetadataRoute.Sitemap = unitPairs.map((pair) => ({
+  const convertRoutes: MetadataRoute.Sitemap = unitPairs.map((pair) => ({
     url: `${baseUrl}/convert/${pair.slug}`,
     lastModified,
     changeFrequency: "weekly",
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...dynamicRoutes];
+  const scaleValues = getScaledValues();
+
+  const kgToLbsRoutes: MetadataRoute.Sitemap = scaleValues.map((val) => ({
+    url: `${baseUrl}/${val}-kg-to-lbs`,
+    lastModified,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  const lbsToKgRoutes: MetadataRoute.Sitemap = scaleValues.map((val) => ({
+    url: `${baseUrl}/${val}-lbs-to-kg`,
+    lastModified,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  return [...staticRoutes, ...convertRoutes, ...kgToLbsRoutes, ...lbsToKgRoutes];
 }
+
+
 
