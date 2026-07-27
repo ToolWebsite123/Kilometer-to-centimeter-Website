@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, ChangeEvent } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { formatNumber } from "@/lib/convert";
 import {
   CategoryId,
@@ -9,6 +10,7 @@ import {
   convertUnit,
   getFormulaString,
 } from "@/lib/categories";
+import { unitPairs } from "@/lib/unit-pairs";
 import styles from "./Converter.module.css";
 
 interface ConverterProps {
@@ -43,6 +45,27 @@ const PRESETS_BY_CATEGORY: Record<CategoryId, number[]> = {
   time: [1, 2, 5, 12, 24, 48],
 };
 
+const DEFAULT_SLUGS: Record<CategoryId, string> = {
+  weight: "kg-to-lbs",
+  length: "cm-to-inches",
+  temperature: "celsius-to-fahrenheit",
+  volume: "liters-to-gallons",
+  time: "hours-to-seconds",
+};
+
+function getSlugForPair(category: CategoryId, fromUnit: string, toUnit: string): string {
+  const exact = unitPairs.find((p) => p.fromUnit === fromUnit && p.toUnit === toUnit);
+  if (exact) return exact.slug;
+
+  const reverse = unitPairs.find((p) => p.fromUnit === toUnit && p.toUnit === fromUnit);
+  if (reverse) return reverse.slug;
+
+  const sameFrom = unitPairs.find((p) => p.fromUnit === fromUnit);
+  if (sameFrom) return sameFrom.slug;
+
+  return DEFAULT_SLUGS[category] || "kg-to-lbs";
+}
+
 export default function Converter({
   initialCategory = "weight",
   initialFromUnit,
@@ -57,6 +80,9 @@ export default function Converter({
   toUnit: propToUnit,
   factor: propFactor,
 }: ConverterProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [activeCategory, setActiveCategory] = useState<CategoryId>(initialCategory);
 
   const categoryInfo = CATEGORIES[activeCategory] || CATEGORIES.weight;
@@ -82,11 +108,36 @@ export default function Converter({
   const [activeDriver, setActiveDriver] = useState<"from" | "to">("from");
   const [decimals, setDecimals] = useState<Precision>(2);
 
-  // Sync prop updates if passed from parent
+  // Sync state when props change across navigations or parent updates
   useEffect(() => {
-    if (propFromUnit) setFromUnitId(propFromUnit);
-    if (propToUnit) setToUnitId(propToUnit);
-  }, [propFromUnit, propToUnit]);
+    const nextCategory = initialCategory || "weight";
+    const catDetails = CATEGORIES[nextCategory] || CATEGORIES.weight;
+    const nextFrom = propFromUnit || initialFromUnit || catDetails.defaultFrom;
+    const nextTo = propToUnit || initialToUnit || catDetails.defaultTo;
+    const nextStartVal =
+      initialKg !== undefined
+        ? initialKg
+        : initialLbs !== undefined
+        ? initialLbs / 2.20462262185
+        : initialValue !== undefined
+        ? initialValue
+        : 1;
+
+    setActiveCategory(nextCategory);
+    setFromUnitId(nextFrom);
+    setToUnitId(nextTo);
+    setFromInput(nextStartVal.toString());
+    setActiveDriver("from");
+  }, [
+    initialCategory,
+    propFromUnit,
+    propToUnit,
+    initialFromUnit,
+    initialToUnit,
+    initialKg,
+    initialLbs,
+    initialValue,
+  ]);
 
   // Handle Tab Switch
   const handleTabChange = (catId: CategoryId) => {
@@ -100,6 +151,16 @@ export default function Converter({
 
     if (onSelectionChange) {
       onSelectionChange(catId, newFrom, newTo);
+    } else if (
+      pathname &&
+      (pathname.startsWith("/convert/") ||
+        pathname.includes("-kg-to-lbs") ||
+        pathname.includes("-lbs-to-kg"))
+    ) {
+      const targetSlug = getSlugForPair(catId, newFrom, newTo);
+      if (targetSlug) {
+        router.push(`/convert/${targetSlug}`);
+      }
     }
   };
 
@@ -109,6 +170,11 @@ export default function Converter({
     setFromUnitId(newFrom);
     if (onSelectionChange) {
       onSelectionChange(activeCategory, newFrom, toUnitId);
+    } else if (pathname && pathname.startsWith("/convert/")) {
+      const targetSlug = getSlugForPair(activeCategory, newFrom, toUnitId);
+      if (targetSlug) {
+        router.push(`/convert/${targetSlug}`);
+      }
     }
   };
 
@@ -117,6 +183,11 @@ export default function Converter({
     setToUnitId(newTo);
     if (onSelectionChange) {
       onSelectionChange(activeCategory, fromUnitId, newTo);
+    } else if (pathname && pathname.startsWith("/convert/")) {
+      const targetSlug = getSlugForPair(activeCategory, fromUnitId, newTo);
+      if (targetSlug) {
+        router.push(`/convert/${targetSlug}`);
+      }
     }
   };
 

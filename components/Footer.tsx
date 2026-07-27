@@ -28,6 +28,12 @@ export default function Footer() {
               <Link href="/about" className={styles.link}>
                 About & Standards
               </Link>
+              <Link href="/privacy-policy" className={styles.link}>
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className={styles.link}>
+                Terms of Service
+              </Link>
             </div>
 
             <div className={styles.linkGroup}>

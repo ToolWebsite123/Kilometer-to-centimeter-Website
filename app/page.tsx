@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import UnifiedConverterView from "@/components/UnifiedConverterView";
-import FAQSection from "@/components/FAQSection";
-import PopularConversions from "@/components/PopularConversions";
 
 export const metadata: Metadata = {
   title: "Free Unit Converter - Length, Weight, Temperature, Volume & Time",
@@ -22,10 +20,8 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="container">
+    <div className="container" style={{ maxWidth: "1200px" }}>
       <UnifiedConverterView />
-      <PopularConversions />
-      <FAQSection />
     </div>
   );
 }

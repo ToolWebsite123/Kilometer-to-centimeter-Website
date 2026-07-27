@@ -1,7 +1,30 @@
 .heroSection {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .heroTitle {
   margin-bottom: 0.5rem;
+}
+
+.pageLayout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 2rem;
+  align-items: start;
+}
+
+.mainColumn {
+  min-width: 0;
+}
+
+.sidebarColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (max-width: 960px) {
+  .pageLayout {
+    grid-template-columns: 1fr;
+  }
 }

@@ -14,9 +14,11 @@ interface PageProps {
 
 export function generateStaticParams() {
   const values = getScaledValues();
-  return values.map((val) => ({
-    value: val.toString(),
-  }));
+  return values
+    .filter((val) => val !== 70)
+    .map((val) => ({
+      value: val.toString(),
+    }));
 }
 
 export function generateMetadata({ params }: PageProps): Metadata {
@@ -150,7 +152,12 @@ export default function KgToLbsScalePage({ params }: PageProps) {
       </p>
 
       {/* Interactive Converter initialized to numVal */}
-      <Converter initialKg={numVal} title={`Convert ${numVal} Kilograms to Pounds`} />
+      <Converter
+        initialCategory="weight"
+        initialKg={numVal}
+        showTabs={true}
+        title={`Convert ${numVal} Kilograms to Pounds`}
+      />
 
       {/* Formula Explanation */}
       <section className="editorial-card" style={{ marginTop: "2.5rem" }}>
@@ -228,7 +235,7 @@ export default function KgToLbsScalePage({ params }: PageProps) {
       </section>
 
       {/* Popular Conversions */}
-      <PopularConversions />
+      <PopularConversions category="weight" />
 
       <p style={{ marginTop: "2rem" }}>
         ← <Link href="/">Return to Main Weight Converter</Link>
@@ -236,4 +243,3 @@ export default function KgToLbsScalePage({ params }: PageProps) {
     </div>
   );
 }
-

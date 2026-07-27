@@ -155,11 +155,13 @@ export default function LbsToKgScalePage({ params }: PageProps) {
 
       {/* Interactive Converter initialized to numVal lbs */}
       <Converter
+        initialCategory="weight"
         fromUnit="lbs"
         toUnit="kg"
         fromLabel="Pounds"
         toLabel="Kilograms"
         factor={LBS_TO_KG_FACTOR}
+        showTabs={true}
         title={`Convert ${numVal} Pounds to Kilograms`}
       />
 
@@ -239,7 +241,7 @@ export default function LbsToKgScalePage({ params }: PageProps) {
       </section>
 
       {/* Popular Conversions */}
-      <PopularConversions />
+      <PopularConversions category="weight" />
 
       <p style={{ marginTop: "2rem" }}>
         ← <Link href="/">Return to Main Weight Converter</Link>
@@ -247,4 +249,3 @@ export default function LbsToKgScalePage({ params }: PageProps) {
     </div>
   );
 }
-

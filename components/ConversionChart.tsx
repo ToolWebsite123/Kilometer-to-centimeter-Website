@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import { formatNumber } from "@/lib/convert";
 import {
   CategoryId,
@@ -169,8 +170,22 @@ export default function ConversionChart({
               pagedRows.map((row) => (
                 <tr key={row.from}>
                   <td>
-                    <strong>{row.from}</strong>{" "}
-                    <span className={styles.unitCell}>{fromInfo.symbol}</span>
+                    {fromUnit === "kg" && toUnit === "lbs" ? (
+                      <Link href={`/${row.from}-kg-to-lbs`}>
+                        <strong>{row.from}</strong>{" "}
+                        <span className={styles.unitCell}>{fromInfo.symbol}</span>
+                      </Link>
+                    ) : fromUnit === "lbs" && toUnit === "kg" ? (
+                      <Link href={`/${row.from}-lbs-to-kg`}>
+                        <strong>{row.from}</strong>{" "}
+                        <span className={styles.unitCell}>{fromInfo.symbol}</span>
+                      </Link>
+                    ) : (
+                      <>
+                        <strong>{row.from}</strong>{" "}
+                        <span className={styles.unitCell}>{fromInfo.symbol}</span>
+                      </>
+                    )}
                   </td>
                   <td>
                     {row.to.toFixed(4)}{" "}
