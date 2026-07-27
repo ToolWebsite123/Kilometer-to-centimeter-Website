@@ -2,19 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About Kg to Lbs Converter — Standards & Precision",
+  title: "About Free Unit Converter — Standards & Precision",
   description:
-    "Learn about our editorial single-purpose weight conversion tool, international standards (1959 treaty), and math accuracy commitment.",
-  keywords: ["about kg to lbs", "weight conversion standards", "avoirdupois pound definition", "metric mass conversion"],
+    "Learn about our editorial multi-unit converter, metrological standards, and mathematical accuracy commitment.",
+  keywords: ["about unit converter", "weight conversion standards", "metrology standards", "conversion math accuracy"],
 };
 
 export default function AboutPage() {
   return (
     <div className="container">
       <span className="editorial-tag">Documentation & Standards</span>
-      <h1>About Kg to Lbs Converter</h1>
+      <h1>About Free Unit Converter</h1>
       <p className="lead">
-        We provide a fast, zero-bloat, distraction-free utility for converting mass values between kilograms and pounds with mathematical exactness.
+        We provide a fast, zero-bloat, distraction-free utility for converting measurement values across Length, Weight, Temperature, Volume, and Time with mathematical exactness.
       </p>
 
       <section className="editorial-card">
@@ -23,7 +23,7 @@ export default function AboutPage() {
           Unlike generic online converters cluttered with advertisements, heavy scripts, and imprecise approximations, this website is built with strict adherence to international metrological definitions.
         </p>
         <p>
-          All calculations are processed using pure, open mathematical functions based on the <strong>1959 International Yard and Pound Agreement</strong>, which fixed the avoirdupois pound to exactly <code>0.45359237 kilograms</code>.
+          All calculations are processed using pure, open mathematical functions based on official standard ratios (such as the <strong>1959 International Yard and Pound Agreement</strong>, standard metric prefixes, and thermodynamic temperature offsets).
         </p>
 
         <h2>Technical Architecture</h2>
@@ -31,31 +31,30 @@ export default function AboutPage() {
           <li><strong>Lightweight & Fast:</strong> Zero external UI framework bloat. Built purely with Next.js App Router, TypeScript, and vanilla CSS Modules.</li>
           <li><strong>Real-Time Two-Way Conversion:</strong> Instant calculations as you type in either direction without requiring form submission.</li>
           <li><strong>Static HTML Export:</strong> Fully static pre-rendered site delivering sub-second load times and offline performance.</li>
-          <li><strong>Privacy First:</strong> All conversions execute locally in your web browser. No user data or weight inputs are transmitted or logged.</li>
+          <li><strong>Privacy First:</strong> All conversions execute locally in your web browser. No user data or input values are transmitted or logged.</li>
         </ul>
 
-        <h2>Definitions & Historical Background</h2>
+        <h2>Definitions & Standards</h2>
         
-        <h3>History & Definition of the Kilogram</h3>
+        <h3>Mass & Weight (Kilograms & Pounds)</h3>
         <p>
-          The kilogram (symbol: kg) is the base unit of mass in the International System of Units (SI). Originally defined in 1795 as the mass of one liter of pure water at its freezing point, it was later standardized by the International Prototype Kilogram (IPK) platinum-iridium cylinder stored in France in 1889. In May 2019, the General Conference on Weights and Measures officially redefined the kilogram in terms of fundamental physical constants, anchoring its exact magnitude directly to Planck&apos;s constant (6.62607015 × 10⁻³⁴ J·s).
+          Standardized legally worldwide under the 1959 treaty, 1 avoirdupois pound is equal to exactly 0.45359237 kilograms (or 1 kg = 2.20462262185 lbs).
         </p>
 
-        <h3>History & Definition of the Pound</h3>
+        <h3>Temperature (Celsius, Fahrenheit & Kelvin)</h3>
         <p>
-          The avoirdupois pound (symbol: lb) is a unit of mass used primarily in the United States and the United Kingdom. Originating from ancient Roman weight standards (the <em>libra</em>) and modified through medieval English trade, its definition varied across countries for centuries. On July 1, 1959, the International Yard and Pound Agreement formally standardized the avoirdupois pound as legally equal to exactly 0.45359237 kilograms worldwide.
+          Temperature scales combine multiplicative scaling with additive offsets due to different baseline zero points (0 °C = 32 °F = 273.15 K).
         </p>
 
         <h2>Contact & Inquiries</h2>
         <p>
-          For suggestions, metrology inquiries, or feedback regarding our calculations, please visit our main tool or explore our reference guides.
+          For suggestions or feedback regarding our calculations, please return to our main converter.
         </p>
       </section>
 
       <p style={{ marginTop: "2rem" }}>
-        ← <Link href="/">Return to Main Kg to Lbs Converter</Link>
+        ← <Link href="/">Return to Main Multi-Unit Converter</Link>
       </p>
     </div>
   );
 }
-

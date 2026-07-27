@@ -6,6 +6,42 @@
   box-shadow: none;
 }
 
+/* Category Tabs Navigation */
+.tabNav {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 2px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding-bottom: 0;
+}
+
+.tabBtn {
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  margin-bottom: -2px;
+}
+
+.tabBtn:hover {
+  color: var(--moss);
+}
+
+.tabBtnActive {
+  color: var(--moss);
+  border-bottom-color: var(--moss);
+  background: var(--paper);
+}
+
 .topBar {
   display: flex;
   justify-content: space-between;
@@ -98,6 +134,24 @@
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--brass);
+}
+
+.unitSelect {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.unitSelect:focus {
+  border-color: var(--brass);
+  outline: none;
 }
 
 .inputWrapper {

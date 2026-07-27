@@ -59,11 +59,13 @@ export default function ConvertPage({ params }: PageProps) {
 
       {/* Converter Component */}
       <Converter
+        initialCategory="weight"
         fromUnit={pair.fromUnit}
         toUnit={pair.toUnit}
         fromLabel={pair.fromLabel}
         toLabel={pair.toLabel}
         factor={pair.factor}
+        showTabs={false}
         title={`${pair.fromLabel} to ${pair.toLabel} Instant Calculator`}
       />
 
@@ -89,6 +91,7 @@ export default function ConvertPage({ params }: PageProps) {
 
       {/* ConversionChart Component */}
       <ConversionChart
+        category="weight"
         fromUnit={pair.fromUnit}
         toUnit={pair.toUnit}
         factor={pair.factor}
@@ -100,9 +103,8 @@ export default function ConvertPage({ params }: PageProps) {
       <PopularConversions currentSlug={pair.slug} />
 
       <p style={{ marginTop: "2rem" }}>
-        ← <Link href="/">Return to Main Weight Converter</Link>
+        ← <Link href="/">Return to Main Multi-Unit Converter</Link>
       </p>
     </div>
   );
 }
-

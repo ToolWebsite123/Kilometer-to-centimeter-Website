@@ -11,8 +11,8 @@ Designed with a clean, editorial utility aesthetic (`--ink: #132a24`, `--paper: 
 - **Framework**: Next.js 14+ (App Router)
 - **Language**: TypeScript (Strict Mode)
 - **Styling**: Vanilla CSS Modules (CSS Custom Properties, zero frameworks)
-- **Export Mode**: Static HTML Export (`output: 'export'` in `next.config.ts`)
-- **SEO & Metadata**: Next.js Metadata API, JSON-LD `FAQPage` schema, dynamic `sitemap.ts`, `robots.txt`
+- **Export Mode**: Static HTML Export (`output: 'export'` in `next.config.mjs`)
+- **SEO & Metadata**: Next.js Metadata API, JSON-LD schemas (`WebApplication`, `BreadcrumbList`, `FAQPage`), dynamic `sitemap.ts`, `robots.txt`
 
 ---
 
@@ -25,26 +25,38 @@ kg-to-lbs-app/
 │   ├── page.tsx                 (Home page — converter hero, formula guide, chart, FAQs)
 │   ├── page.module.css          (Home page specific styles)
 │   ├── globals.css              (Design tokens, CSS variables, typography reset)
+│   ├── convert/
+│   │   └── [slug]/
+│   │       ├── page.tsx         (Dynamic unit pair routes e.g., kg-to-lbs, oz-to-kg, kg-to-stone)
+│   │       └── page.module.css  (Styles for convert slug page layout)
+│   ├── [value]-kg-to-lbs/
+│   │   └── page.tsx             (Programmatic scale routes for kg to lbs: integers 1-500 & multiples of 10 to 10,000)
+│   ├── [value]-lbs-to-kg/
+│   │   └── page.tsx             (Programmatic scale routes for lbs to kg: integers 1-500 & multiples of 10 to 10,000)
 │   ├── guides/
 │   │   ├── 70-kg-to-lbs/page.tsx (Targeted guide for 70 kg to lbs)
 │   │   ├── 1-kg-to-lbs/page.tsx  (Targeted guide for base 1 kg unit factor)
 │   │   └── kg-to-lbs-chart/page.tsx (Complete reference lookup guide)
-│   ├── about/page.tsx           (Standards & metrology overview)
-│   └── sitemap.ts               (Dynamic sitemap.xml generator)
+│   ├── about/page.tsx           (Standards, metrology overview, and unit definitions)
+│   └── sitemap.ts               (Dynamic sitemap.xml generator for all static, unit-pair, and scale routes)
 ├── components/
-│   ├── Converter.tsx + Converter.module.css       (Real-time 2-way converter)
-│   ├── ConversionChart.tsx + ConversionChart.module.css (Interactive 1-100 kg chart)
-│   ├── FAQSection.tsx + FAQSection.module.css     (Collapsible FAQs + JSON-LD schema)
-│   ├── Header.tsx + Header.module.css             (Editorial navigation header)
-│   └── Footer.tsx + Footer.module.css             (Site footer)
+│   ├── Converter.tsx + Converter.module.css             (Real-time 2-way generic unit converter)
+│   ├── ConversionChart.tsx + ConversionChart.module.css (Interactive lookup chart)
+│   ├── FAQSection.tsx + FAQSection.module.css           (Collapsible FAQs + JSON-LD schema)
+│   ├── Header.tsx + Header.module.css                   (Editorial navigation header)
+│   ├── Footer.tsx + Footer.module.css                   (Site footer)
+│   └── PopularConversions.tsx + PopularConversions.module.css (Popular conversion internal link grid)
 ├── lib/
-│   └── convert.ts               (Pure conversion math, constants, chart helpers)
+│   ├── convert.ts               (Pure conversion math, constants, chart helpers)
+│   ├── scale-values.ts          (Scale values generator for programmatic routes)
+│   └── unit-pairs.ts            (Configuration & metadata for seeded conversion pairs)
 ├── public/
 │   └── robots.txt               (Search engine crawler directives)
-├── next.config.ts               (Static export configuration)
+├── next.config.mjs              (Static export configuration)
 ├── tsconfig.json                (Strict TypeScript compiler config)
 └── README.md                    (Project documentation)
 ```
+
 
 ---
 

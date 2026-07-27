@@ -10,29 +10,34 @@ export interface FAQItem {
 
 const defaultFAQs: FAQItem[] = [
   {
+    question: "How do unit conversions work?",
+    answer:
+      "Unit conversion calculates equivalent values between different measurement systems (such as metric and imperial). Linear units like length, weight, volume, and time use fixed multiplier ratios relative to a standard base unit. Temperature conversions additionally apply offset shifts to account for different zero points.",
+  },
+  {
     question: "How many pounds are in 1 kilogram?",
     answer:
-      "There are exactly 2.20462262185 pounds in 1 kilogram. For quick mental math, you can approximate 1 kg as 2.2 pounds.",
+      "There are exactly 2.20462262185 pounds in 1 kilogram, according to the 1959 International Yard and Pound Agreement. For quick mental math, you can approximate 1 kg as 2.2 pounds by doubling the kilograms and adding 10%.",
   },
   {
-    question: "What is the exact formula to convert kg to lbs?",
+    question: "How do I convert Celsius to Fahrenheit or Kelvin?",
     answer:
-      "To convert kilograms to pounds, multiply the mass in kilograms by 2.20462262185. Formula: Pounds = Kilograms × 2.20462262185. Conversely, to convert pounds to kilograms, divide pounds by 2.20462262185.",
+      "To convert Celsius to Fahrenheit, multiply by 9/5 (or 1.8) and add 32. Formula: °F = (°C × 1.8) + 32. To convert Celsius to Kelvin, add 273.15. Formula: K = °C + 273.15.",
   },
   {
-    question: "How do I convert kilograms to pounds manually without a calculator?",
+    question: "How many centimeters and inches are in 1 meter?",
     answer:
-      "A simple rule of thumb for quick estimation: double the kilogram value, then add 10% of that result. For example, to convert 70 kg: 70 × 2 = 140. 10% of 140 is 14. 140 + 14 = 154 lbs (very close to the exact 154.32 lbs).",
+      "1 meter equals exactly 100 centimeters or 39.37007874 inches (approximately 39.3701 in). Conversely, 1 inch equals exactly 2.54 centimeters.",
   },
   {
-    question: "What is the difference between mass (kg) and weight (lbs)?",
+    question: "How do volume conversions work between liters and gallons?",
     answer:
-      "Strictly speaking, the kilogram (kg) is a metric base unit of mass (amount of matter), while the pound (lb) in common usage refers to the avoirdupois pound as a measure of weight or mass. On Earth's surface, standard acceleration due to gravity makes them directly convertible for everyday weight measurements.",
+      "1 US fluid gallon equals 3.785411784 liters. Therefore, 1 liter equals approximately 0.264172 US liquid gallons.",
   },
   {
-    question: "Why is 1 kg equal to 2.20462 lbs?",
+    question: "Why are temperature conversions different from length or weight?",
     answer:
-      "The conversion factor comes from the International Yard and Pound Agreement of 1959, which legally defined 1 avoirdupois pound as exactly 0.45359237 kilograms. Dividing 1 by 0.45359237 yields approximately 2.20462262185 lbs per kilogram.",
+      "Length, weight, volume, and time share a true zero point (zero mass or zero length is zero in any unit). Temperature scales use different baseline zero points (0°C = 32°F = 273.15 K), which requires combining a scale factor with an offset calculation.",
   },
 ];
 
@@ -41,11 +46,11 @@ interface FAQSectionProps {
 }
 
 /**
- * FAQ Section Component
+ * Universal FAQ Section Component
  * Displays collapsible Q&A items and embeds JSON-LD FAQPage schema for search engine rich snippets.
  */
 export default function FAQSection({ faqs = defaultFAQs }: FAQSectionProps) {
-  const [openIndexes, setOpenIndexes] = useState<number[]>([0]);
+  const [openIndexes, setOpenIndexes] = useState<number[]>([0, 1]);
 
   const toggleItem = (index: number) => {
     setOpenIndexes((prev) =>
@@ -53,7 +58,6 @@ export default function FAQSection({ faqs = defaultFAQs }: FAQSectionProps) {
     );
   };
 
-  // Structured Data (JSON-LD) for FAQPage schema
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -69,7 +73,6 @@ export default function FAQSection({ faqs = defaultFAQs }: FAQSectionProps) {
 
   return (
     <section className={styles.faqSection} aria-label="Frequently Asked Questions">
-      {/* JSON-LD Schema Insertion */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
@@ -77,7 +80,7 @@ export default function FAQSection({ faqs = defaultFAQs }: FAQSectionProps) {
 
       <h2 className={styles.heading}>Frequently Asked Questions</h2>
       <p className={styles.intro}>
-        Everything you need to know about converting kilograms to pounds, accuracy, and formulas.
+        Common questions about measurement conversions across Length, Weight, Temperature, Volume, and Time.
       </p>
 
       <div className={styles.accordion}>

@@ -3,7 +3,7 @@ import styles from "./Footer.module.css";
 
 /**
  * Site Footer Component
- * Restrained, editorial footer featuring site navigation and utility notes.
+ * Editorial footer featuring navigation and utility notes for multi-category unit converter.
  */
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -13,41 +13,38 @@ export default function Footer() {
       <div className={styles.inner}>
         <div className={styles.topSection}>
           <div className={styles.brandCol}>
-            <div className={styles.title}>Kg to Lbs Converter</div>
+            <div className={styles.title}>Free Unit Converter</div>
             <p className={styles.description}>
-              A precise, lightweight editorial utility for converting mass between international kilograms (kg) and avoirdupois pounds (lbs).
+              A precise, lightweight editorial utility for converting Length, Weight, Temperature, Volume, and Time in real time.
             </p>
           </div>
 
           <div className={styles.linksCol}>
             <div className={styles.linkGroup}>
-              <div className={styles.groupHeading}>Tools</div>
+              <div className={styles.groupHeading}>Navigation</div>
               <Link href="/" className={styles.link}>
-                Converter
+                Multi-Unit Converter
               </Link>
-              <Link href="/guides/kg-to-lbs-chart" className={styles.link}>
-                Conversion Chart
+              <Link href="/about" className={styles.link}>
+                About & Standards
               </Link>
             </div>
 
             <div className={styles.linkGroup}>
-              <div className={styles.groupHeading}>Guides</div>
-              <Link href="/guides/70-kg-to-lbs" className={styles.link}>
-                70 kg to lbs
+              <div className={styles.groupHeading}>Popular Conversions</div>
+              <Link href="/convert/kg-to-lbs" className={styles.link}>
+                Kg to Lbs
               </Link>
-              <Link href="/guides/1-kg-to-lbs" className={styles.link}>
-                1 kg to lbs
-              </Link>
-              <Link href="/about" className={styles.link}>
-                Formula & Standards
+              <Link href="/convert/lbs-to-kg" className={styles.link}>
+                Lbs to Kg
               </Link>
             </div>
           </div>
         </div>
 
         <div className={styles.bottomSection}>
-          <div>© {currentYear} Kg to Lbs Converter. All rights reserved.</div>
-          <div>Standard: 1 kg = 2.20462262185 lbs</div>
+          <div>© {currentYear} Free Unit Converter. All rights reserved.</div>
+          <div>Precision Standard: International Metrology Definitions</div>
         </div>
       </div>
     </footer>

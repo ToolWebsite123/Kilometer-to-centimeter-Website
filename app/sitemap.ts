@@ -23,24 +23,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.5,
     },
-    {
-      url: `${baseUrl}/guides/70-kg-to-lbs`,
-      lastModified,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/guides/1-kg-to-lbs`,
-      lastModified,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/guides/kg-to-lbs-chart`,
-      lastModified,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
   ];
 
   const convertRoutes: MetadataRoute.Sitemap = unitPairs.map((pair) => ({
@@ -68,6 +50,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [...staticRoutes, ...convertRoutes, ...kgToLbsRoutes, ...lbsToKgRoutes];
 }
-
-
-

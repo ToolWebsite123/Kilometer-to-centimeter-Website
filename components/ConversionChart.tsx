@@ -2,72 +2,92 @@
 
 import { useState, useMemo } from "react";
 import { formatNumber } from "@/lib/convert";
+import {
+  CategoryId,
+  CATEGORIES,
+  convertUnit,
+} from "@/lib/categories";
 import styles from "./ConversionChart.module.css";
 
 interface ConversionChartProps {
-  startKg?: number;
-  endKg?: number;
+  category?: CategoryId;
+  fromUnit?: string;
+  toUnit?: string;
   startValue?: number;
   endValue?: number;
   step?: number;
   title?: string;
   subtitle?: string;
-  fromUnit?: string;
-  toUnit?: string;
+  // Legacy compatibility props
+  startKg?: number;
+  endKg?: number;
   factor?: number;
 }
 
-/**
- * Unit Reference Table Component
- * Generates an interactive, searchable lookup chart for any unit pair.
- */
 export default function ConversionChart({
-  startKg,
-  endKg,
-  startValue,
-  endValue,
-  step = 1,
-  title,
-  subtitle,
+  category = "weight",
   fromUnit = "kg",
   toUnit = "lbs",
-  factor = 2.20462262185,
+  startValue,
+  endValue,
+  step,
+  title,
+  subtitle,
+  startKg,
+  endKg,
 }: ConversionChartProps) {
-  const startVal = startValue !== undefined ? startValue : (startKg !== undefined ? startKg : 1);
-  const endVal = endValue !== undefined ? endValue : (endKg !== undefined ? endKg : 100);
+  const catInfo = CATEGORIES[category] || CATEGORIES.weight;
+  const fromInfo = catInfo.units.find((u) => u.id === fromUnit) || {
+    id: fromUnit,
+    name: fromUnit,
+    symbol: fromUnit,
+  };
+  const toInfo = catInfo.units.find((u) => u.id === toUnit) || {
+    id: toUnit,
+    name: toUnit,
+    symbol: toUnit,
+  };
+
+  const isTemp = category === "temperature";
+  const defaultStart = startValue ?? (startKg ?? (isTemp ? 0 : 1));
+  const defaultEnd = endValue ?? (endKg ?? 100);
+  const defaultStep = step ?? (isTemp ? 5 : 1);
 
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const pageSize = 25;
 
-  const defaultTitle = title || (fromUnit === "kg" && toUnit === "lbs"
-    ? "Kilograms to Pounds Conversion Reference Chart"
-    : `${fromUnit.charAt(0).toUpperCase() + fromUnit.slice(1)} to ${toUnit.charAt(0).toUpperCase() + toUnit.slice(1)} Conversion Reference Chart`);
+  const defaultTitle =
+    title ||
+    `${fromInfo.name} to ${toInfo.name} Conversion Reference Table`;
 
-  const defaultSubtitle = subtitle || (fromUnit === "kg" && toUnit === "lbs"
-    ? "Common weight conversions from 1 kg up to 100 kg in 1 kg increments."
-    : `Common conversions from 1 ${fromUnit} up to 100 ${fromUnit} in 1 ${fromUnit} increments.`);
+  const defaultSubtitle =
+    subtitle ||
+    `Common conversions from ${defaultStart} ${fromInfo.symbol} up to ${defaultEnd} ${fromInfo.symbol} in ${defaultStep} ${fromInfo.symbol} increments.`;
 
-  // Generate complete dataset using factor
+  // Generate complete dataset dynamically using convertUnit
   const allRows = useMemo(() => {
     const rows = [];
-    for (let val = startVal; val <= endVal; val += step) {
+    for (let val = defaultStart; val <= defaultEnd; val += defaultStep) {
+      const convertedVal = convertUnit(val, fromUnit, toUnit, category);
       rows.push({
         from: val,
-        to: val * factor,
+        to: convertedVal,
       });
     }
     return rows;
-  }, [startVal, endVal, step, factor]);
+  }, [defaultStart, defaultEnd, defaultStep, fromUnit, toUnit, category]);
 
   // Filter based on user search term
   const filteredRows = useMemo(() => {
     if (!search.trim()) return allRows;
 
-    // Sanitize search input: trim, lowercase, strip unit words and extra spaces
-    const escapedFrom = fromUnit.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-    const escapedTo = toUnit.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-    const pattern = new RegExp(`kilograms|kilogram|pounds|pound|${escapedFrom}|${escapedTo}`, 'gi');
+    const escapedFrom = fromInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+    const escapedTo = toInfo.name.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+    const pattern = new RegExp(
+      `${escapedFrom}|${escapedTo}|${fromInfo.symbol}|${toInfo.symbol}`,
+      "gi"
+    );
     const sanitized = search
       .toLowerCase()
       .replace(pattern, "")
@@ -85,25 +105,20 @@ export default function ConversionChart({
       const to2Str = row.to.toFixed(2);
 
       if (isNum) {
-        // Match exact from number
         if (row.from === numQuery) return true;
-        // Match exact or 2-decimal to number
         if (to2Str === sanitized || to4Str === sanitized) return true;
         if (Math.abs(parseFloat(to2Str) - numQuery) < 0.0001) return true;
       }
 
-      // Exact string comparison fallback
       if (fromStr === sanitized) return true;
       if (to2Str === sanitized || to4Str === sanitized) return true;
 
       return false;
     });
-  }, [allRows, search, fromUnit, toUnit]);
+  }, [allRows, search, fromInfo, toInfo]);
 
-  // Total pages
   const totalPages = Math.ceil(filteredRows.length / pageSize) || 1;
 
-  // Slice active page items
   const pagedRows = useMemo(() => {
     const startIdx = (page - 1) * pageSize;
     return filteredRows.slice(startIdx, startIdx + pageSize);
@@ -125,7 +140,7 @@ export default function ConversionChart({
         <div className={styles.controls}>
           <input
             type="text"
-            placeholder={`Search ${fromUnit} or ${toUnit} (e.g. 45 or 45${fromUnit})`}
+            placeholder={`Search ${fromInfo.symbol} or ${toInfo.symbol} (e.g. 45 or 45 ${fromInfo.symbol})`}
             value={search}
             onChange={handleSearchChange}
             className={styles.searchField}
@@ -138,9 +153,15 @@ export default function ConversionChart({
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>{fromUnit === "kg" ? "Kilograms (kg)" : `${fromUnit.charAt(0).toUpperCase() + fromUnit.slice(1)} (${fromUnit})`}</th>
-              <th>{toUnit === "lbs" ? "Pounds (lbs) [Exact]" : `${toUnit.charAt(0).toUpperCase() + toUnit.slice(1)} (${toUnit}) [Exact]`}</th>
-              <th>{toUnit === "lbs" ? "Pounds (lbs) [2 Decimals]" : `${toUnit.charAt(0).toUpperCase() + toUnit.slice(1)} (${toUnit}) [2 Decimals]`}</th>
+              <th>
+                {fromInfo.name} ({fromInfo.symbol})
+              </th>
+              <th>
+                {toInfo.name} ({toInfo.symbol}) [Exact / 4 Dec]
+              </th>
+              <th>
+                {toInfo.name} ({toInfo.symbol}) [2 Decimals]
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -148,10 +169,17 @@ export default function ConversionChart({
               pagedRows.map((row) => (
                 <tr key={row.from}>
                   <td>
-                    <strong>{row.from}</strong> <span className={styles.unitCell}>{fromUnit}</span>
+                    <strong>{row.from}</strong>{" "}
+                    <span className={styles.unitCell}>{fromInfo.symbol}</span>
                   </td>
-                  <td>{row.to.toFixed(4)} <span className={styles.unitCell}>{toUnit}</span></td>
-                  <td>{formatNumber(row.to, 2)} <span className={styles.unitCell}>{toUnit}</span></td>
+                  <td>
+                    {row.to.toFixed(4)}{" "}
+                    <span className={styles.unitCell}>{toInfo.symbol}</span>
+                  </td>
+                  <td>
+                    {formatNumber(row.to, 2)}{" "}
+                    <span className={styles.unitCell}>{toInfo.symbol}</span>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -169,7 +197,8 @@ export default function ConversionChart({
         <div className={styles.pagination}>
           <div>
             Showing {(page - 1) * pageSize + 1}–
-            {Math.min(page * pageSize, filteredRows.length)} of {filteredRows.length} entries
+            {Math.min(page * pageSize, filteredRows.length)} of{" "}
+            {filteredRows.length} entries
           </div>
 
           <div className={styles.pageButtons}>
@@ -186,7 +215,9 @@ export default function ConversionChart({
               <button
                 key={pNum}
                 type="button"
-                className={`${styles.pageBtn} ${page === pNum ? styles.pageBtnActive : ""}`}
+                className={`${styles.pageBtn} ${
+                  page === pNum ? styles.pageBtnActive : ""
+                }`}
                 onClick={() => setPage(pNum)}
               >
                 {pNum}
@@ -207,4 +238,3 @@ export default function ConversionChart({
     </div>
   );
 }
-
