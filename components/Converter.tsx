@@ -23,6 +23,7 @@ interface ConverterProps {
     fromUnit: string,
     toUnit: string
   ) => void;
+  onFromValueChange?: (val: number | null) => void;
   showTabs?: boolean;
   title?: string;
   // Backward compatibility props for /convert/[slug] and scale pages
@@ -74,6 +75,7 @@ export default function Converter({
   initialKg,
   initialLbs,
   onSelectionChange,
+  onFromValueChange,
   showTabs = true,
   title,
   fromUnit: propFromUnit,
@@ -83,7 +85,9 @@ export default function Converter({
   const router = useRouter();
   const pathname = usePathname();
 
-  const [activeCategory, setActiveCategory] = useState<CategoryId>(initialCategory);
+  const [activeCategory, setActiveCategory] = useState<CategoryId>(
+    initialCategory || "weight"
+  );
 
   const categoryInfo = CATEGORIES[activeCategory] || CATEGORIES.weight;
 
@@ -107,6 +111,18 @@ export default function Converter({
   const [toInput, setToInput] = useState<string>("");
   const [activeDriver, setActiveDriver] = useState<"from" | "to">("from");
   const [decimals, setDecimals] = useState<Precision>(2);
+
+  // Notify parent of FROM value changes
+  useEffect(() => {
+    if (onFromValueChange) {
+      const num = parseFloat(fromInput);
+      if (!isNaN(num)) {
+        onFromValueChange(num);
+      } else {
+        onFromValueChange(null);
+      }
+    }
+  }, [fromInput, onFromValueChange]);
 
   // Sync state when props change across navigations or parent updates
   useEffect(() => {
@@ -154,12 +170,17 @@ export default function Converter({
     } else if (
       pathname &&
       (pathname.startsWith("/convert/") ||
+        pathname.startsWith("/length/") ||
+        pathname.startsWith("/weight/") ||
+        pathname.startsWith("/volume/") ||
+        pathname.startsWith("/time/") ||
+        pathname.startsWith("/temperature/") ||
         pathname.includes("-kg-to-lbs") ||
         pathname.includes("-lbs-to-kg"))
     ) {
       const targetSlug = getSlugForPair(catId, newFrom, newTo);
       if (targetSlug) {
-        router.push(`/convert/${targetSlug}`);
+        router.push(`/${catId}/${targetSlug}`);
       }
     }
   };
@@ -170,12 +191,20 @@ export default function Converter({
     setFromUnitId(newFrom);
     if (onSelectionChange) {
       onSelectionChange(activeCategory, newFrom, toUnitId);
-    } else if (pathname && pathname.startsWith("/convert/")) {
+    } else if (
+      pathname &&
+      (pathname.startsWith("/convert/") ||
+        pathname.startsWith("/length/") ||
+        pathname.startsWith("/weight/") ||
+        pathname.startsWith("/volume/") ||
+        pathname.startsWith("/time/") ||
+        pathname.startsWith("/temperature/"))
+    ) {
       const exactMatch = unitPairs.find(
         (p) => p.fromUnit === newFrom && p.toUnit === toUnitId
       );
       if (exactMatch) {
-        router.push(`/convert/${exactMatch.slug}`);
+        router.push(`/${activeCategory}/${exactMatch.slug}`);
       }
     }
   };
@@ -185,12 +214,20 @@ export default function Converter({
     setToUnitId(newTo);
     if (onSelectionChange) {
       onSelectionChange(activeCategory, fromUnitId, newTo);
-    } else if (pathname && pathname.startsWith("/convert/")) {
+    } else if (
+      pathname &&
+      (pathname.startsWith("/convert/") ||
+        pathname.startsWith("/length/") ||
+        pathname.startsWith("/weight/") ||
+        pathname.startsWith("/volume/") ||
+        pathname.startsWith("/time/") ||
+        pathname.startsWith("/temperature/"))
+    ) {
       const exactMatch = unitPairs.find(
         (p) => p.fromUnit === fromUnitId && p.toUnit === newTo
       );
       if (exactMatch) {
-        router.push(`/convert/${exactMatch.slug}`);
+        router.push(`/${activeCategory}/${exactMatch.slug}`);
       }
     }
   };

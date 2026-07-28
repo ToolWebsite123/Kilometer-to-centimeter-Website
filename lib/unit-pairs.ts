@@ -1,3 +1,5 @@
+import { CategoryId } from "./categories";
+
 export interface UnitPair {
   slug: string;
   fromUnit: string;
@@ -7,6 +9,22 @@ export interface UnitPair {
   factor: number;
   description: string;
 }
+
+const LENGTH_UNITS = ["cm", "in", "mm", "m", "ft", "km", "mi"];
+const WEIGHT_UNITS = ["kg", "lbs", "g", "grams", "oz", "stone", "st", "ton", "mg", "t"];
+const VOLUME_UNITS = ["l", "ml", "gal", "qt", "pt", "cup", "floz", "fl-oz", "m3", "ft3", "tsp", "tbsp", "liters", "milliliters", "gallons"];
+const TIME_UNITS = ["sec", "min", "hr", "day", "wk", "mo", "yr", "hours", "seconds", "s", "ms", "us", "ns", "ps", "decade", "century", "millennium"];
+const TEMP_UNITS = ["celsius", "fahrenheit", "kelvin", "c", "f", "k"];
+
+export const getPairCategory = (pair: UnitPair): CategoryId => {
+  const from = pair.fromUnit.toLowerCase();
+  if (LENGTH_UNITS.includes(from)) return "length";
+  if (WEIGHT_UNITS.includes(from)) return "weight";
+  if (VOLUME_UNITS.includes(from)) return "volume";
+  if (TIME_UNITS.includes(from)) return "time";
+  if (TEMP_UNITS.includes(from)) return "temperature";
+  return "weight";
+};
 
 export const unitPairs: UnitPair[] = [
   {
@@ -406,6 +424,24 @@ export const unitPairs: UnitPair[] = [
     toLabel: "Celsius",
     factor: 1,
     description: "Convert Kelvin (K) to Celsius (°C) instantly with exact temperature offset formulas.",
+  },
+  {
+    slug: "fahrenheit-to-kelvin",
+    fromUnit: "fahrenheit",
+    toUnit: "kelvin",
+    fromLabel: "Fahrenheit",
+    toLabel: "Kelvin",
+    factor: 1,
+    description: "Convert Fahrenheit (°F) to Kelvin (K) instantly using our temperature calculator.",
+  },
+  {
+    slug: "kelvin-to-fahrenheit",
+    fromUnit: "kelvin",
+    toUnit: "fahrenheit",
+    fromLabel: "Kelvin",
+    toLabel: "Fahrenheit",
+    factor: 1,
+    description: "Convert Kelvin (K) to Fahrenheit (°F) with precision temperature offset formulas.",
   },
   // Volume Category Unit Pairs
   {

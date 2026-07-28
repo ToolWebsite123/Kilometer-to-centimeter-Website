@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Converter from "@/components/Converter";
 import ConversionChart from "@/components/ConversionChart";
 import PopularConversions from "@/components/PopularConversions";
@@ -8,19 +9,34 @@ import FAQSection from "@/components/FAQSection";
 import { CategoryId, CATEGORIES } from "@/lib/categories";
 import styles from "@/app/page.module.css";
 
-export default function UnifiedConverterView() {
-  const [category, setCategory] = useState<CategoryId>("weight");
-  const [fromUnit, setFromUnit] = useState<string>("kg");
-  const [toUnit, setToUnit] = useState<string>("lbs");
+interface UnifiedConverterViewProps {
+  initialCategory?: CategoryId;
+  title?: string;
+}
+
+export default function UnifiedConverterView({
+  initialCategory = "weight",
+  title,
+}: UnifiedConverterViewProps = {}) {
+  const router = useRouter();
+  const defaultCatInfo = CATEGORIES[initialCategory] || CATEGORIES.weight;
+  const [category, setCategory] = useState<CategoryId>(initialCategory);
+  const [fromUnit, setFromUnit] = useState<string>(defaultCatInfo.defaultFrom);
+  const [toUnit, setToUnit] = useState<string>(defaultCatInfo.defaultTo);
+  const [fromValue, setFromValue] = useState<number | null>(1);
 
   const handleSelectionChange = (
     newCat: CategoryId,
     newFrom: string,
     newTo: string
   ) => {
-    setCategory(newCat);
-    setFromUnit(newFrom);
-    setToUnit(newTo);
+    if (newCat !== category) {
+      router.push(`/${newCat}-converter`);
+    } else {
+      setCategory(newCat);
+      setFromUnit(newFrom);
+      setToUnit(newTo);
+    }
   };
 
   const catInfo = CATEGORIES[category] || CATEGORIES.weight;
@@ -39,7 +55,7 @@ export default function UnifiedConverterView() {
         {/* Hero Section with Category Tabs & Converter */}
         <section className={styles.heroSection}>
           <span className="editorial-tag">Precision Utility</span>
-          <h1 className={styles.heroTitle}>Free Multi-Unit Converter</h1>
+          <h1 className={styles.heroTitle}>{title || "Free Multi-Unit Converter"}</h1>
           <p className="lead">
             Instantly convert between units of <strong>Length</strong>,{" "}
             <strong>Weight</strong>, <strong>Temperature</strong>,{" "}
@@ -51,6 +67,7 @@ export default function UnifiedConverterView() {
             initialFromUnit={fromUnit}
             initialToUnit={toUnit}
             onSelectionChange={handleSelectionChange}
+            onFromValueChange={setFromValue}
             showTabs={true}
           />
         </section>
@@ -114,7 +131,12 @@ export default function UnifiedConverterView() {
         </section>
 
         {/* Dynamic Reference Conversion Table */}
-        <ConversionChart category={category} fromUnit={fromUnit} toUnit={toUnit} />
+        <ConversionChart
+          category={category}
+          fromUnit={fromUnit}
+          toUnit={toUnit}
+          highlightValue={fromValue}
+        />
 
         <FAQSection />
       </div>

@@ -1,4 +1,4 @@
-import { unitPairs } from "@/lib/unit-pairs";
+import { unitPairs, getPairCategory } from "@/lib/unit-pairs";
 
 export const dynamic = "force-static";
 
@@ -8,11 +8,16 @@ export async function GET() {
 
   const staticUrls = [
     { url: `${baseUrl}`, priority: "1.0", changefreq: "daily" },
+    { url: `${baseUrl}/length-converter`, priority: "0.8", changefreq: "daily" },
+    { url: `${baseUrl}/weight-converter`, priority: "0.8", changefreq: "daily" },
+    { url: `${baseUrl}/temperature-converter`, priority: "0.8", changefreq: "daily" },
+    { url: `${baseUrl}/volume-converter`, priority: "0.8", changefreq: "daily" },
+    { url: `${baseUrl}/time-converter`, priority: "0.8", changefreq: "daily" },
     { url: `${baseUrl}/about`, priority: "0.5", changefreq: "monthly" },
   ];
 
   const convertUrls = unitPairs.map((pair) => ({
-    url: `${baseUrl}/convert/${pair.slug}`,
+    url: `${baseUrl}/${getPairCategory(pair)}/${pair.slug}`,
     priority: "0.7",
     changefreq: "weekly",
   }));

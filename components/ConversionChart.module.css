@@ -95,6 +95,11 @@
   background: #ede8db;
 }
 
+.table tr.highlightedRow {
+  background: rgba(67, 104, 84, 0.18) !important;
+  font-weight: 600;
+}
+
 .unitCell {
   color: var(--brass);
   font-size: 0.8rem;

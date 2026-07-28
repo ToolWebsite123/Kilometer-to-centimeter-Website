@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { formatNumber } from "@/lib/convert";
 import {
@@ -19,6 +19,7 @@ interface ConversionChartProps {
   step?: number;
   title?: string;
   subtitle?: string;
+  highlightValue?: number | null;
   // Legacy compatibility props
   startKg?: number;
   endKg?: number;
@@ -50,6 +51,7 @@ export default function ConversionChart({
   step,
   title,
   subtitle,
+  highlightValue,
   startKg,
   endKg,
 }: ConversionChartProps) {
@@ -94,6 +96,22 @@ export default function ConversionChart({
     }
     return rows;
   }, [defaultStart, defaultEnd, defaultStep, fromUnit, toUnit, category]);
+
+  // Auto-jump to page containing highlightValue if within range & search is empty
+  useEffect(() => {
+    if (search.trim() !== "") {
+      return;
+    }
+
+    if (highlightValue != null && !isNaN(highlightValue)) {
+      const rounded = Math.round(highlightValue);
+      const rowIndex = allRows.findIndex((row) => row.from === rounded);
+      if (rowIndex !== -1) {
+        const targetPage = Math.floor(rowIndex / pageSize) + 1;
+        setPage(targetPage);
+      }
+    }
+  }, [highlightValue, search, allRows, pageSize]);
 
   // Filter based on user search term
   const filteredRows = useMemo(() => {
@@ -183,9 +201,17 @@ export default function ConversionChart({
           </thead>
           <tbody>
             {pagedRows.length > 0 ? (
-              pagedRows.map((row) => (
-                <tr key={row.from}>
-                  <td>
+              pagedRows.map((row) => {
+                const isHighlighted =
+                  highlightValue != null &&
+                  !isNaN(highlightValue) &&
+                  row.from === Math.round(highlightValue);
+                return (
+                  <tr
+                    key={row.from}
+                    className={isHighlighted ? styles.highlightedRow : ""}
+                  >
+                    <td>
                     {fromUnit === "kg" && toUnit === "lbs" ? (
                       <Link href={`/${row.from}-kg-to-lbs`}>
                         <strong>{row.from}</strong>{" "}
@@ -212,7 +238,8 @@ export default function ConversionChart({
                     <span className={styles.unitCell}>{toInfo.symbol}</span>
                   </td>
                 </tr>
-              ))
+              );
+            })
             ) : (
               <tr>
                 <td colSpan={3} style={{ textAlign: "center", padding: "2rem" }}>

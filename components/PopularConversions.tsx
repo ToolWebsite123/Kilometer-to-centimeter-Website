@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { unitPairs, UnitPair } from "@/lib/unit-pairs";
+import { unitPairs, UnitPair, getPairCategory } from "@/lib/unit-pairs";
 import { CategoryId } from "@/lib/categories";
 import styles from "./PopularConversions.module.css";
 
@@ -17,22 +17,6 @@ const poundConversions = [
   { label: "Pounds to Metric Tonne (lbs to t)", slug: "pounds-to-tonne" },
   { label: "Pounds to Stone (lbs to st)", slug: "lbs-to-stone" },
 ];
-
-const LENGTH_UNITS = ["cm", "in", "mm", "m", "ft", "km", "mi"];
-const WEIGHT_UNITS = ["kg", "lbs", "g", "grams", "oz", "stone", "st", "ton", "mg", "t"];
-const VOLUME_UNITS = ["l", "ml", "gal", "qt", "pt", "cup", "floz", "fl-oz", "m3", "ft3", "tsp", "tbsp", "liters", "milliliters", "gallons"];
-const TIME_UNITS = ["sec", "min", "hr", "day", "wk", "mo", "yr", "hours", "seconds", "s", "ms", "us", "ns", "ps", "decade", "century", "millennium"];
-const TEMP_UNITS = ["celsius", "fahrenheit", "kelvin", "c", "f", "k"];
-
-const getPairCategory = (pair: UnitPair): CategoryId => {
-  const from = pair.fromUnit.toLowerCase();
-  if (LENGTH_UNITS.includes(from)) return "length";
-  if (WEIGHT_UNITS.includes(from)) return "weight";
-  if (VOLUME_UNITS.includes(from)) return "volume";
-  if (TIME_UNITS.includes(from)) return "time";
-  if (TEMP_UNITS.includes(from)) return "temperature";
-  return "weight";
-};
 
 const categoryTitles: Record<CategoryId, string> = {
   weight: "Popular Weight & Mass Conversions",
@@ -67,7 +51,7 @@ export default function PopularConversions({ currentSlug, category }: PopularCon
             {categoryPairs.map((pair) => (
               <Link
                 key={pair.slug}
-                href={`/convert/${pair.slug}`}
+                href={`/${getPairCategory(pair)}/${pair.slug}`}
                 className={styles.linkCard}
               >
                 {pair.fromLabel} to {pair.toLabel}
@@ -88,7 +72,7 @@ export default function PopularConversions({ currentSlug, category }: PopularCon
               .map((item) => (
                 <Link
                   key={item.slug}
-                  href={`/convert/${item.slug}`}
+                  href={`/weight/${item.slug}`}
                   className={styles.linkCard}
                 >
                   {item.label}

@@ -1,0 +1,28 @@
+import type { Metadata } from "next";
+import UnifiedConverterView from "@/components/UnifiedConverterView";
+
+export const metadata: Metadata = {
+  title: "Length Converter - Convert Centimeters, Meters, Inches, Feet & Miles",
+  description:
+    "Free online length converter. Instantly convert between centimeters, meters, kilometers, inches, feet, yards, and miles with real-time accuracy.",
+  keywords: [
+    "length converter",
+    "cm to inches",
+    "meters to feet",
+    "inches to cm",
+    "feet to meters",
+    "km to miles",
+    "distance converter",
+  ],
+};
+
+export default function LengthConverterPage() {
+  return (
+    <div className="container" style={{ maxWidth: "1200px" }}>
+      <UnifiedConverterView
+        initialCategory="length"
+        title="Length Converter"
+      />
+    </div>
+  );
+}

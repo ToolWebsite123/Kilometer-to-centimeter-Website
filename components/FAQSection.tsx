@@ -50,7 +50,7 @@ interface FAQSectionProps {
  * Displays collapsible Q&A items and embeds JSON-LD FAQPage schema for search engine rich snippets.
  */
 export default function FAQSection({ faqs = defaultFAQs }: FAQSectionProps) {
-  const [openIndexes, setOpenIndexes] = useState<number[]>([0, 1]);
+  const [openIndexes, setOpenIndexes] = useState<number[]>([]);
 
   const toggleItem = (index: number) => {
     setOpenIndexes((prev) =>
