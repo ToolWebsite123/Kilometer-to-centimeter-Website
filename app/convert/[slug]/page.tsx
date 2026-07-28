@@ -111,7 +111,7 @@ export default function ConvertPage({ params }: PageProps) {
             toUnit={pair.toUnit}
             factor={pair.factor}
             title={`${pair.fromLabel} to ${pair.toLabel} Conversion Chart`}
-            subtitle={`Reference lookup table for various conversions from 1 ${pair.fromUnit} up to 100 ${pair.fromUnit}.`}
+            subtitle={`Reference lookup table for various conversions from 1 ${pair.fromUnit} up to 1000 ${pair.fromUnit}.`}
           />
 
           <p style={{ marginTop: "2rem" }}>

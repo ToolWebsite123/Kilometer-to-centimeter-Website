@@ -25,6 +25,22 @@ interface ConversionChartProps {
   factor?: number;
 }
 
+function getPaginationItems(current: number, total: number): (number | string)[] {
+  if (total <= 10) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+
+  if (current <= 4) {
+    return [1, 2, 3, 4, 5, "...", total - 1, total];
+  }
+
+  if (current >= total - 3) {
+    return [1, 2, "...", total - 4, total - 3, total - 2, total - 1, total];
+  }
+
+  return [1, 2, "...", current - 1, current, current + 1, "...", total - 1, total];
+}
+
 export default function ConversionChart({
   category = "weight",
   fromUnit = "kg",
@@ -51,7 +67,7 @@ export default function ConversionChart({
 
   const isTemp = category === "temperature";
   const defaultStart = startValue ?? (startKg ?? (isTemp ? 0 : 1));
-  const defaultEnd = endValue ?? (endKg ?? 100);
+  const defaultEnd = endValue ?? (endKg ?? 1000);
   const defaultStep = step ?? (isTemp ? 5 : 1);
 
   const [search, setSearch] = useState("");
@@ -226,18 +242,24 @@ export default function ConversionChart({
               ← Prev
             </button>
 
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((pNum) => (
-              <button
-                key={pNum}
-                type="button"
-                className={`${styles.pageBtn} ${
-                  page === pNum ? styles.pageBtnActive : ""
-                }`}
-                onClick={() => setPage(pNum)}
-              >
-                {pNum}
-              </button>
-            ))}
+            {getPaginationItems(page, totalPages).map((item, idx) =>
+              typeof item === "number" ? (
+                <button
+                  key={item}
+                  type="button"
+                  className={`${styles.pageBtn} ${
+                    page === item ? styles.pageBtnActive : ""
+                  }`}
+                  onClick={() => setPage(item)}
+                >
+                  {item}
+                </button>
+              ) : (
+                <span key={`ellipsis-${idx}`} className={styles.ellipsis}>
+                  ...
+                </span>
+              )
+            )}
 
             <button
               type="button"

@@ -20,8 +20,8 @@ const poundConversions = [
 
 const LENGTH_UNITS = ["cm", "in", "mm", "m", "ft", "km", "mi"];
 const WEIGHT_UNITS = ["kg", "lbs", "g", "grams", "oz", "stone", "st", "ton", "mg", "t"];
-const VOLUME_UNITS = ["l", "ml", "gal", "qt", "pt", "cup", "fl-oz", "liters", "milliliters", "gallons"];
-const TIME_UNITS = ["sec", "min", "hr", "day", "wk", "mo", "yr", "hours", "seconds"];
+const VOLUME_UNITS = ["l", "ml", "gal", "qt", "pt", "cup", "floz", "fl-oz", "m3", "ft3", "tsp", "tbsp", "liters", "milliliters", "gallons"];
+const TIME_UNITS = ["sec", "min", "hr", "day", "wk", "mo", "yr", "hours", "seconds", "s", "ms", "us", "ns", "ps", "decade", "century", "millennium"];
 const TEMP_UNITS = ["celsius", "fahrenheit", "kelvin", "c", "f", "k"];
 
 const getPairCategory = (pair: UnitPair): CategoryId => {

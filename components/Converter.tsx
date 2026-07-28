@@ -171,9 +171,11 @@ export default function Converter({
     if (onSelectionChange) {
       onSelectionChange(activeCategory, newFrom, toUnitId);
     } else if (pathname && pathname.startsWith("/convert/")) {
-      const targetSlug = getSlugForPair(activeCategory, newFrom, toUnitId);
-      if (targetSlug) {
-        router.push(`/convert/${targetSlug}`);
+      const exactMatch = unitPairs.find(
+        (p) => p.fromUnit === newFrom && p.toUnit === toUnitId
+      );
+      if (exactMatch) {
+        router.push(`/convert/${exactMatch.slug}`);
       }
     }
   };
@@ -184,9 +186,11 @@ export default function Converter({
     if (onSelectionChange) {
       onSelectionChange(activeCategory, fromUnitId, newTo);
     } else if (pathname && pathname.startsWith("/convert/")) {
-      const targetSlug = getSlugForPair(activeCategory, fromUnitId, newTo);
-      if (targetSlug) {
-        router.push(`/convert/${targetSlug}`);
+      const exactMatch = unitPairs.find(
+        (p) => p.fromUnit === fromUnitId && p.toUnit === newTo
+      );
+      if (exactMatch) {
+        router.push(`/convert/${exactMatch.slug}`);
       }
     }
   };

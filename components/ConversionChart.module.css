@@ -137,6 +137,16 @@
   border-color: var(--moss);
 }
 
+.ellipsis {
+  padding: 0.3rem 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+}
+
 @media (max-width: 640px) {
   .chartCard {
     padding: 1rem;
