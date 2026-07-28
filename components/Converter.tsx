@@ -169,8 +169,7 @@ export default function Converter({
       onSelectionChange(catId, newFrom, newTo);
     } else if (
       pathname &&
-      (pathname.startsWith("/convert/") ||
-        pathname.startsWith("/length/") ||
+      (pathname.startsWith("/length/") ||
         pathname.startsWith("/weight/") ||
         pathname.startsWith("/volume/") ||
         pathname.startsWith("/time/") ||
@@ -193,8 +192,7 @@ export default function Converter({
       onSelectionChange(activeCategory, newFrom, toUnitId);
     } else if (
       pathname &&
-      (pathname.startsWith("/convert/") ||
-        pathname.startsWith("/length/") ||
+      (pathname.startsWith("/length/") ||
         pathname.startsWith("/weight/") ||
         pathname.startsWith("/volume/") ||
         pathname.startsWith("/time/") ||
@@ -216,8 +214,7 @@ export default function Converter({
       onSelectionChange(activeCategory, fromUnitId, newTo);
     } else if (
       pathname &&
-      (pathname.startsWith("/convert/") ||
-        pathname.startsWith("/length/") ||
+      (pathname.startsWith("/length/") ||
         pathname.startsWith("/weight/") ||
         pathname.startsWith("/volume/") ||
         pathname.startsWith("/time/") ||
