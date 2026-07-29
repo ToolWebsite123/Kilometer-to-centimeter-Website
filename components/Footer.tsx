@@ -38,10 +38,10 @@ export default function Footer() {
 
             <div className={styles.linkGroup}>
               <div className={styles.groupHeading}>Popular Conversions</div>
-              <Link href="/convert/kg-to-lbs" className={styles.link}>
+              <Link href="/weight/kg-to-lbs" className={styles.link}>
                 Kg to Lbs
               </Link>
-              <Link href="/convert/lbs-to-kg" className={styles.link}>
+              <Link href="/weight/lbs-to-kg" className={styles.link}>
                 Lbs to Kg
               </Link>
             </div>
