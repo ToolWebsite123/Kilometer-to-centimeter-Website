@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   },
   description:
     "Fast, accurate online multi-unit converter for length, weight, temperature, volume, and time. Features real-time calculations and interactive conversion charts.",
+  icons: {
+    icon: "/favicon.ico",
+  },
   keywords: [
     "unit converter",
     "kg to lbs",
