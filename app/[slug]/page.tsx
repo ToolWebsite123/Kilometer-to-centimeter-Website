@@ -8,6 +8,8 @@ import PopularConversions from "@/components/PopularConversions";
 
 const LBS_TO_KG_FACTOR = 0.45359237;
 
+export const dynamicParams = false;
+
 interface PageProps {
   params: {
     slug: string;

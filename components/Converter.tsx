@@ -167,20 +167,8 @@ export default function Converter({
 
     if (onSelectionChange) {
       onSelectionChange(catId, newFrom, newTo);
-    } else if (
-      pathname &&
-      (pathname.startsWith("/length/") ||
-        pathname.startsWith("/weight/") ||
-        pathname.startsWith("/volume/") ||
-        pathname.startsWith("/time/") ||
-        pathname.startsWith("/temperature/") ||
-        pathname.includes("-kg-to-lbs") ||
-        pathname.includes("-lbs-to-kg"))
-    ) {
-      const targetSlug = getSlugForPair(catId, newFrom, newTo);
-      if (targetSlug) {
-        router.push(`/${catId}/${targetSlug}`);
-      }
+    } else {
+      router.push(`/${catId}-converter`);
     }
   };
 
