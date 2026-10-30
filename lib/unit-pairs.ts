@@ -2,6 +2,7 @@ import { CategoryId } from "./categories";
 
 export interface UnitPair {
   slug: string;
+  note?: string;
   fromUnit: string;
   toUnit: string;
   fromLabel: string;
@@ -34,7 +35,7 @@ export const unitPairs: UnitPair[] = [
     fromLabel: "Kilograms",
     toLabel: "Pounds",
     factor: 2.20462262185,
-    description: "Convert kilograms (kg) to pounds (lbs) instantly using our real-time weight calculator and conversion tables.",
+    description: "Convert kilograms (kg) to pounds (lbs) instantly with our weight calculator and conversion tables.",
   },
   {
     slug: "lbs-to-kg",
@@ -242,7 +243,7 @@ export const unitPairs: UnitPair[] = [
     fromLabel: "Centimeters",
     toLabel: "Inches",
     factor: 0.3937007874,
-    description: "Convert centimeters (cm) to inches (in) instantly using our real-time length calculator and conversion tables.",
+    description: "Convert centimeters (cm) to inches (in) instantly with our length calculator and conversion tables.",
   },
   {
     slug: "inches-to-cm",
@@ -388,6 +389,24 @@ export const unitPairs: UnitPair[] = [
     factor: 1000,
     description: "Convert kilometers (km) to meters (m) instantly using our converter.",
   },
+  {
+    slug: "km-to-cm",
+    fromUnit: "km",
+    toUnit: "cm",
+    fromLabel: "Kilometers",
+    toLabel: "Centimeters",
+    factor: 100000,
+    description: "Convert kilometers (km) to centimeters (cm) instantly with our length calculator and conversion tables.",
+  },
+  {
+    slug: "cm-to-km",
+    fromUnit: "cm",
+    toUnit: "km",
+    fromLabel: "Centimeters",
+    toLabel: "Kilometers",
+    factor: 0.00001,
+    description: "Convert centimeters (cm) to kilometers (km) instantly with our length calculator and conversion tables.",
+  },
   // Temperature Category Unit Pairs
   {
     slug: "celsius-to-fahrenheit",
@@ -396,7 +415,7 @@ export const unitPairs: UnitPair[] = [
     fromLabel: "Celsius",
     toLabel: "Fahrenheit",
     factor: 1.8,
-    description: "Convert Celsius (°C) to Fahrenheit (°F) instantly using our real-time temperature calculator and conversion tables.",
+    description: "Convert Celsius (°C) to Fahrenheit (°F) instantly with our temperature calculator and conversion tables.",
   },
   {
     slug: "fahrenheit-to-celsius",
@@ -699,6 +718,7 @@ export const unitPairs: UnitPair[] = [
   },
   {
     slug: "months-to-days",
+    note: "Months and years vary in length, so month and year conversions use averages: 1 year = 365.2425 days (the Gregorian average year) and 1 month = 1/12 of that year, about 30.4369 days.",
     fromUnit: "mo",
     toUnit: "day",
     fromLabel: "Months",
@@ -708,6 +728,7 @@ export const unitPairs: UnitPair[] = [
   },
   {
     slug: "days-to-months",
+    note: "Months and years vary in length, so month and year conversions use averages: 1 year = 365.2425 days (the Gregorian average year) and 1 month = 1/12 of that year, about 30.4369 days.",
     fromUnit: "day",
     toUnit: "mo",
     fromLabel: "Days",
@@ -717,21 +738,23 @@ export const unitPairs: UnitPair[] = [
   },
   {
     slug: "years-to-days",
+    note: "Months and years vary in length, so month and year conversions use averages: 1 year = 365.2425 days (the Gregorian average year) and 1 month = 1/12 of that year, about 30.4369 days.",
     fromUnit: "yr",
     toUnit: "day",
     fromLabel: "Years",
     toLabel: "Days",
-    factor: 365.25,
-    description: "Convert years (yr) to days (day) instantly using our time calculator.",
+    factor: 365.2425,
+    description: "Convert years (yr) to days (day) using the average Gregorian year (365.2425 days).",
   },
   {
     slug: "days-to-years",
+    note: "Months and years vary in length, so month and year conversions use averages: 1 year = 365.2425 days (the Gregorian average year) and 1 month = 1/12 of that year, about 30.4369 days.",
     fromUnit: "day",
     toUnit: "yr",
     fromLabel: "Days",
     toLabel: "Years",
-    factor: 0.00273790926,
-    description: "Convert days (day) to years (yr) with precision.",
+    factor: 0.002737907,
+    description: "Convert days (day) to years (yr) using the average Gregorian year (365.2425 days).",
   },
   {
     slug: "years-to-months",

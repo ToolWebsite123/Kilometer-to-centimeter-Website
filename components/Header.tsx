@@ -11,12 +11,24 @@ export default function Header() {
       <div className={styles.inner}>
         <Link href="/" className={styles.brand}>
           <span>Unit Converter</span>
-          <span className={styles.symbol}>[kg ⇄ lbs & more]</span>
+          <span className={styles.symbol}>[km ⇄ cm & more]</span>
         </Link>
 
         <nav className={styles.nav} aria-label="Main Navigation">
-          <Link href="/" className={styles.navLink}>
-            Converter
+          <Link href="/length-converter" className={styles.navLink}>
+            Length
+          </Link>
+          <Link href="/weight-converter" className={styles.navLink}>
+            Weight
+          </Link>
+          <Link href="/temperature-converter" className={styles.navLink}>
+            Temperature
+          </Link>
+          <Link href="/volume-converter" className={styles.navLink}>
+            Volume
+          </Link>
+          <Link href="/time-converter" className={styles.navLink}>
+            Time
           </Link>
           <Link href="/about" className={styles.navLink}>
             About

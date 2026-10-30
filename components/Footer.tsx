@@ -38,6 +38,12 @@ export default function Footer() {
 
             <div className={styles.linkGroup}>
               <div className={styles.groupHeading}>Popular Conversions</div>
+              <Link href="/length/km-to-cm" className={styles.link}>
+                Km to Cm
+              </Link>
+              <Link href="/length/cm-to-km" className={styles.link}>
+                Cm to Km
+              </Link>
               <Link href="/weight/kg-to-lbs" className={styles.link}>
                 Kg to Lbs
               </Link>

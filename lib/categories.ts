@@ -99,17 +99,17 @@ export const CATEGORIES: Record<CategoryId, CategoryInfo> = {
       { id: "day", name: "Day", symbol: "day", ratioToBase: 86400 },
       { id: "wk", name: "Week", symbol: "wk", ratioToBase: 604800 },
       { id: "mo", name: "Month", symbol: "mo", ratioToBase: 2629746 },
-      { id: "yr", name: "Year", symbol: "yr", ratioToBase: 31557600 },
-      { id: "decade", name: "Decade", symbol: "decade", ratioToBase: 315576000 },
-      { id: "century", name: "Century", symbol: "century", ratioToBase: 3155760000 },
-      { id: "millennium", name: "Millennium", symbol: "millennium", ratioToBase: 31557600000 },
+      { id: "yr", name: "Year", symbol: "yr", ratioToBase: 31556952 },
+      { id: "decade", name: "Decade", symbol: "decade", ratioToBase: 315569520 },
+      { id: "century", name: "Century", symbol: "century", ratioToBase: 3155695200 },
+      { id: "millennium", name: "Millennium", symbol: "millennium", ratioToBase: 31556952000 },
     ],
   },
 };
 
 export const CATEGORY_LIST: CategoryInfo[] = [
-  CATEGORIES.weight,
   CATEGORIES.length,
+  CATEGORIES.weight,
   CATEGORIES.temperature,
   CATEGORIES.volume,
   CATEGORIES.time,
@@ -173,26 +173,30 @@ export function getFormulaString(
   result: number,
   formattedResult: string
 ): string {
+  // The formatted result is rounded to the chosen precision; show a strict
+  // "=" only when the rounded display still equals the exact result.
+  const eq = Number(formattedResult.replace(/,/g, "")) === result ? "=" : "≈";
+
   if (categoryId === "temperature") {
     if (fromUnitId === "celsius" && toUnitId === "fahrenheit") {
-      return `Formula: (${val} °C × 9/5) + 32 = ${formattedResult} °F`;
+      return `Formula: (${val} °C × 9/5) + 32 ${eq} ${formattedResult} °F`;
     }
     if (fromUnitId === "fahrenheit" && toUnitId === "celsius") {
-      return `Formula: (${val} °F − 32) × 5/9 = ${formattedResult} °C`;
+      return `Formula: (${val} °F − 32) × 5/9 ${eq} ${formattedResult} °C`;
     }
     if (fromUnitId === "celsius" && toUnitId === "kelvin") {
-      return `Formula: ${val} °C + 273.15 = ${formattedResult} K`;
+      return `Formula: ${val} °C + 273.15 ${eq} ${formattedResult} K`;
     }
     if (fromUnitId === "kelvin" && toUnitId === "celsius") {
-      return `Formula: ${val} K − 273.15 = ${formattedResult} °C`;
+      return `Formula: ${val} K − 273.15 ${eq} ${formattedResult} °C`;
     }
     if (fromUnitId === "fahrenheit" && toUnitId === "kelvin") {
-      return `Formula: (${val} °F − 32) × 5/9 + 273.15 = ${formattedResult} K`;
+      return `Formula: (${val} °F − 32) × 5/9 + 273.15 ${eq} ${formattedResult} K`;
     }
     if (fromUnitId === "kelvin" && toUnitId === "fahrenheit") {
-      return `Formula: (${val} K − 273.15) × 9/5 + 32 = ${formattedResult} °F`;
+      return `Formula: (${val} K − 273.15) × 9/5 + 32 ${eq} ${formattedResult} °F`;
     }
-    return `Formula: ${val} ${fromUnitId} = ${formattedResult} ${toUnitId}`;
+    return `Formula: ${val} ${fromUnitId} ${eq} ${formattedResult} ${toUnitId}`;
   }
 
   const category = CATEGORIES[categoryId];
@@ -201,8 +205,8 @@ export function getFormulaString(
 
   if (fromUnit && toUnit && fromUnit.ratioToBase && toUnit.ratioToBase) {
     const factor = fromUnit.ratioToBase / toUnit.ratioToBase;
-    return `Formula: ${val} ${fromUnit.symbol} × ${factor} = ${formattedResult} ${toUnit.symbol}`;
+    return `Formula: ${val} ${fromUnit.symbol} × ${factor} ${eq} ${formattedResult} ${toUnit.symbol}`;
   }
 
-  return `Formula: ${val} ${fromUnitId} = ${formattedResult} ${toUnitId}`;
+  return `Formula: ${val} ${fromUnitId} ${eq} ${formattedResult} ${toUnitId}`;
 }

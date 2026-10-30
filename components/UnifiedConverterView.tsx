@@ -11,18 +11,30 @@ import styles from "@/app/page.module.css";
 
 interface UnifiedConverterViewProps {
   initialCategory?: CategoryId;
+  initialFromUnit?: string;
+  initialToUnit?: string;
   title?: string;
+  lead?: string;
+  children?: React.ReactNode;
 }
 
 export default function UnifiedConverterView({
   initialCategory = "weight",
+  initialFromUnit,
+  initialToUnit,
   title,
+  lead,
+  children,
 }: UnifiedConverterViewProps = {}) {
   const router = useRouter();
   const defaultCatInfo = CATEGORIES[initialCategory] || CATEGORIES.weight;
   const [category, setCategory] = useState<CategoryId>(initialCategory);
-  const [fromUnit, setFromUnit] = useState<string>(defaultCatInfo.defaultFrom);
-  const [toUnit, setToUnit] = useState<string>(defaultCatInfo.defaultTo);
+  const [fromUnit, setFromUnit] = useState<string>(
+    initialFromUnit || defaultCatInfo.defaultFrom
+  );
+  const [toUnit, setToUnit] = useState<string>(
+    initialToUnit || defaultCatInfo.defaultTo
+  );
   const [fromValue, setFromValue] = useState<number | null>(1);
 
   const handleSelectionChange = (
@@ -57,9 +69,13 @@ export default function UnifiedConverterView({
           <span className="editorial-tag">Precision Utility</span>
           <h1 className={styles.heroTitle}>{title || "Free Multi-Unit Converter"}</h1>
           <p className="lead">
-            Instantly convert between units of <strong>Length</strong>,{" "}
-            <strong>Weight</strong>, <strong>Temperature</strong>,{" "}
-            <strong>Volume</strong>, and <strong>Time</strong> with exact metrological precision.
+            {lead || (
+              <>
+                Instantly convert between units of <strong>Length</strong>,{" "}
+                <strong>Weight</strong>, <strong>Temperature</strong>,{" "}
+                <strong>Volume</strong>, and <strong>Time</strong> with exact metrological precision.
+              </>
+            )}
           </p>
 
           <Converter
@@ -71,6 +87,8 @@ export default function UnifiedConverterView({
             showTabs={true}
           />
         </section>
+
+        {children}
 
         {/* Formula Explanation Section */}
         <section className="editorial-card">
