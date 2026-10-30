@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { getScaledValues } from "@/lib/scale-values";
 import { formatNumber, KG_TO_LBS_FACTOR } from "@/lib/convert";
+import { siteUrl, SITE_URL } from "@/lib/site";
 import Converter from "@/components/Converter";
 import PopularConversions from "@/components/PopularConversions";
 
@@ -44,16 +45,21 @@ export function generateMetadata({ params }: PageProps): Metadata {
     if (isNaN(numVal) || numVal <= 0) return {};
 
     const lbsVal = formatNumber(numVal * KG_TO_LBS_FACTOR, 2);
-    const title = `${numVal} kg to lbs – Convert ${numVal} Kilograms to Pounds`;
-    const description = `Convert ${numVal} kg to lbs instantly. ${numVal} kilograms is equal to ${lbsVal} pounds. Includes conversion formula breakdown and nearby weight lookup table.`;
+    const kgWord = numVal === 1 ? "Kilogram" : "Kilograms";
+    const kgWordLower = numVal === 1 ? "kilogram" : "kilograms";
+    const verb = numVal === 1 ? "is" : "are";
+    const title = `${numVal} kg to lbs – Convert ${numVal} ${kgWord} to Pounds`;
+    const description = `Convert ${numVal} kg to lbs instantly. ${numVal} ${kgWordLower} ${verb} equal to ${lbsVal} pounds. Includes conversion formula breakdown and nearby weight lookup table.`;
 
     return {
       title,
       description,
+      robots: { index: false, follow: true },
+      alternates: { canonical: siteUrl(`/${numVal}-kg-to-lbs`) },
       openGraph: {
         title,
         description,
-        url: `https://kgtolbsconverter.org/${numVal}-kg-to-lbs`,
+        url: siteUrl(`/${numVal}-kg-to-lbs`),
       },
       twitter: {
         title,
@@ -68,16 +74,21 @@ export function generateMetadata({ params }: PageProps): Metadata {
     if (isNaN(numVal) || numVal <= 0) return {};
 
     const kgVal = formatNumber(numVal * LBS_TO_KG_FACTOR, 2);
-    const title = `${numVal} lbs to kg – Convert ${numVal} Pounds to Kilograms`;
-    const description = `Convert ${numVal} lbs to kg instantly. ${numVal} pounds is equal to ${kgVal} kilograms. Includes conversion formula breakdown and nearby weight lookup table.`;
+    const lbsWord = numVal === 1 ? "Pound" : "Pounds";
+    const lbsWordLower = numVal === 1 ? "pound" : "pounds";
+    const verb = numVal === 1 ? "is" : "are";
+    const title = `${numVal} lbs to kg – Convert ${numVal} ${lbsWord} to Kilograms`;
+    const description = `Convert ${numVal} lbs to kg instantly. ${numVal} ${lbsWordLower} ${verb} equal to ${kgVal} kilograms. Includes conversion formula breakdown and nearby weight lookup table.`;
 
     return {
       title,
       description,
+      robots: { index: false, follow: true },
+      alternates: { canonical: siteUrl(`/${numVal}-lbs-to-kg`) },
       openGraph: {
         title,
         description,
-        url: `https://kgtolbsconverter.org/${numVal}-lbs-to-kg`,
+        url: siteUrl(`/${numVal}-lbs-to-kg`),
       },
       twitter: {
         title,
@@ -103,6 +114,9 @@ export default function NumericScalePage({ params }: PageProps) {
 
     const lbsExact = (numVal * KG_TO_LBS_FACTOR).toFixed(4);
     const lbsFormatted = formatNumber(numVal * KG_TO_LBS_FACTOR, 2);
+    const kgWord = numVal === 1 ? "Kilogram" : "Kilograms";
+    const kgWordLower = numVal === 1 ? "kilogram" : "kilograms";
+    const verb = numVal === 1 ? "is" : "are";
 
     const nearbyRange = [-2, -1, 0, 1, 2]
       .map((offset) => numVal + offset)
@@ -123,7 +137,7 @@ export default function NumericScalePage({ params }: PageProps) {
       "name": `${numVal} kg to lbs Converter`,
       "operatingSystem": "All",
       "applicationCategory": "UtilityApplication",
-      "url": `https://kgtolbsconverter.org/${numVal}-kg-to-lbs`,
+      "url": siteUrl(`/${numVal}-kg-to-lbs`),
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -139,39 +153,23 @@ export default function NumericScalePage({ params }: PageProps) {
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://kgtolbsconverter.org",
+          "item": SITE_URL,
         },
         {
           "@type": "ListItem",
           "position": 2,
+          "name": "Weight Converter",
+          "item": siteUrl("/weight-converter"),
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
           "name": `${numVal} kg to lbs`,
-          "item": `https://kgtolbsconverter.org/${numVal}-kg-to-lbs`,
+          "item": siteUrl(`/${numVal}-kg-to-lbs`),
         },
       ],
     };
 
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": `How many pounds is ${numVal} kg?`,
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": `${numVal} kilograms is equal to ${lbsFormatted} pounds.`,
-          },
-        },
-        {
-          "@type": "Question",
-          "name": `What is the formula to convert ${numVal} kg to lbs?`,
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": `Multiply ${numVal} by ${KG_TO_LBS_FACTOR} to get ${lbsExact} lbs.`,
-          },
-        },
-      ],
-    };
 
     return (
       <div className="container">
@@ -183,28 +181,24 @@ export default function NumericScalePage({ params }: PageProps) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
 
         <span className="editorial-tag">Mass Conversion</span>
-        <h1>{numVal} kg to lbs – Convert {numVal} Kilograms to Pounds</h1>
+        <h1>{numVal} kg to lbs – Convert {numVal} {kgWord} to Pounds</h1>
         <p className="lead">
-          <strong>{numVal} kilograms (kg) is equal to {lbsFormatted} pounds (lbs).</strong>
+          <strong>{numVal} {kgWordLower} (kg) {verb} equal to {lbsFormatted} pounds (lbs).</strong>
         </p>
 
         <Converter
           initialCategory="weight"
           initialKg={numVal}
           showTabs={true}
-          title={`Convert ${numVal} Kilograms to Pounds`}
+          title={`Convert ${numVal} ${kgWord} to Pounds`}
         />
 
         <section className="editorial-card" style={{ marginTop: "2.5rem" }}>
           <h2>Conversion Formula</h2>
           <p>
-            To convert <strong>{numVal} kilograms</strong> to pounds, multiply <code>{numVal}</code> by the international conversion factor <code>{KG_TO_LBS_FACTOR}</code>:
+            To convert <strong>{numVal} {kgWordLower}</strong> to pounds, multiply <code>{numVal}</code> by the international conversion factor <code>{KG_TO_LBS_FACTOR}</code>:
           </p>
           <p style={{ fontFamily: "var(--font-mono)", background: "var(--paper)", padding: "1rem", border: "1px solid var(--line)" }}>
             {numVal} kg × {KG_TO_LBS_FACTOR} = <strong>{lbsExact} lbs</strong>
@@ -292,6 +286,9 @@ export default function NumericScalePage({ params }: PageProps) {
 
     const kgExact = (numVal * LBS_TO_KG_FACTOR).toFixed(4);
     const kgFormatted = formatNumber(numVal * LBS_TO_KG_FACTOR, 2);
+    const lbsWord = numVal === 1 ? "Pound" : "Pounds";
+    const lbsWordLower = numVal === 1 ? "pound" : "pounds";
+    const verb = numVal === 1 ? "is" : "are";
 
     const nearbyRange = [-2, -1, 0, 1, 2]
       .map((offset) => numVal + offset)
@@ -314,7 +311,7 @@ export default function NumericScalePage({ params }: PageProps) {
       "name": `${numVal} lbs to kg Converter`,
       "operatingSystem": "All",
       "applicationCategory": "UtilityApplication",
-      "url": `https://kgtolbsconverter.org/${numVal}-lbs-to-kg`,
+      "url": siteUrl(`/${numVal}-lbs-to-kg`),
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -330,39 +327,23 @@ export default function NumericScalePage({ params }: PageProps) {
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://kgtolbsconverter.org",
+          "item": SITE_URL,
         },
         {
           "@type": "ListItem",
           "position": 2,
+          "name": "Weight Converter",
+          "item": siteUrl("/weight-converter"),
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
           "name": `${numVal} lbs to kg`,
-          "item": `https://kgtolbsconverter.org/${numVal}-lbs-to-kg`,
+          "item": siteUrl(`/${numVal}-lbs-to-kg`),
         },
       ],
     };
 
-    const faqSchema = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": `How many kilograms is ${numVal} lbs?`,
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": `${numVal} pounds is equal to ${kgFormatted} kilograms.`,
-          },
-        },
-        {
-          "@type": "Question",
-          "name": `What is the formula to convert ${numVal} lbs to kg?`,
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": `Multiply ${numVal} by ${LBS_TO_KG_FACTOR} to get ${kgExact} kg.`,
-          },
-        },
-      ],
-    };
 
     return (
       <div className="container">
@@ -374,15 +355,11 @@ export default function NumericScalePage({ params }: PageProps) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
 
         <span className="editorial-tag">Mass Conversion</span>
-        <h1>{numVal} lbs to kg – Convert {numVal} Pounds to Kilograms</h1>
+        <h1>{numVal} lbs to kg – Convert {numVal} {lbsWord} to Kilograms</h1>
         <p className="lead">
-          <strong>{numVal} pounds (lbs) is equal to {kgFormatted} kilograms (kg).</strong>
+          <strong>{numVal} {lbsWordLower} (lbs) {verb} equal to {kgFormatted} kilograms (kg).</strong>
         </p>
 
         <Converter
@@ -393,13 +370,13 @@ export default function NumericScalePage({ params }: PageProps) {
           toLabel="Kilograms"
           factor={LBS_TO_KG_FACTOR}
           showTabs={true}
-          title={`Convert ${numVal} Pounds to Kilograms`}
+          title={`Convert ${numVal} ${lbsWord} to Kilograms`}
         />
 
         <section className="editorial-card" style={{ marginTop: "2.5rem" }}>
           <h2>Conversion Formula</h2>
           <p>
-            To convert <strong>{numVal} pounds</strong> to kilograms, multiply <code>{numVal}</code> by the official conversion factor <code>{LBS_TO_KG_FACTOR}</code>:
+            To convert <strong>{numVal} {lbsWordLower}</strong> to kilograms, multiply <code>{numVal}</code> by the official conversion factor <code>{LBS_TO_KG_FACTOR}</code>:
           </p>
           <p style={{ fontFamily: "var(--font-mono)", background: "var(--paper)", padding: "1rem", border: "1px solid var(--line)" }}>
             {numVal} lbs × {LBS_TO_KG_FACTOR} = <strong>{kgExact} kg</strong>
