@@ -65,6 +65,7 @@ export default function PairConverterView({
                 <p>
                   Conversely, to convert from {pair.toLabel.toLowerCase()} to {pair.fromLabel.toLowerCase()}, you can divide the value by {pair.factor}:
                 </p>
+                {pair.note && <p>{pair.note}</p>}
                 <p style={{ fontFamily: "var(--font-mono)", background: "var(--paper)", padding: "1rem", border: "1px solid var(--line)" }}>
                   Value in {pair.fromLabel} = Value in {pair.toLabel} ÷ <strong>{pair.factor}</strong>
                 </p>
@@ -78,7 +79,11 @@ export default function PairConverterView({
             toUnit={pair.toUnit}
             factor={pair.factor}
             title={`${pair.fromLabel} to ${pair.toLabel} Conversion Chart`}
-            subtitle={`Reference lookup table for various conversions from 1 ${pair.fromUnit} up to 1000 ${pair.fromUnit}.`}
+            subtitle={
+              category === "temperature"
+                ? `Reference lookup table for various conversions from 0 ${pair.fromUnit} up to 1000 ${pair.fromUnit} in 5 ${pair.fromUnit} increments.`
+                : `Reference lookup table for various conversions from 1 ${pair.fromUnit} up to 1000 ${pair.fromUnit}.`
+            }
             highlightValue={fromValue}
           />
 

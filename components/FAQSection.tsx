@@ -17,7 +17,7 @@ const defaultFAQs: FAQItem[] = [
   {
     question: "How many pounds are in 1 kilogram?",
     answer:
-      "There are exactly 2.20462262185 pounds in 1 kilogram, according to the 1959 International Yard and Pound Agreement. For quick mental math, you can approximate 1 kg as 2.2 pounds by doubling the kilograms and adding 10%.",
+      "There are approximately 2.20462262185 pounds in 1 kilogram, according to the 1959 International Yard and Pound Agreement. For quick mental math, you can approximate 1 kg as 2.2 pounds by doubling the kilograms and adding 10%.",
   },
   {
     question: "How do I convert Celsius to Fahrenheit or Kelvin?",

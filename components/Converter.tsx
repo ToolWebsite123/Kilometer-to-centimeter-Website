@@ -263,8 +263,16 @@ export default function Converter({
   const handleSwap = () => {
     const oldFrom = fromUnitId;
     const oldTo = toUnitId;
+    // Preserve the user's value: carry the currently converted result over
+    // as the new source value instead of resetting the input to 1.
+    const currentVal = parseFloat(fromInput);
+    if (!isNaN(currentVal)) {
+      const converted = convertUnit(currentVal, oldFrom, oldTo, activeCategory);
+      setFromInput(formatNumber(converted, decimals).replace(/,/g, ""));
+    }
     setFromUnitId(oldTo);
     setToUnitId(oldFrom);
+    setActiveDriver("from");
     if (onSelectionChange) {
       onSelectionChange(activeCategory, oldTo, oldFrom);
     }
@@ -287,7 +295,9 @@ export default function Converter({
     symbol: toUnitId,
   };
 
-  const currentFromNum = parseFloat(fromInput) || 0;
+  const parsedFrom = parseFloat(fromInput);
+  const hasFromValue = fromInput.trim() !== "" && !isNaN(parsedFrom);
+  const currentFromNum = hasFromValue ? parsedFrom : 0;
   const rawCalculatedTo = convertUnit(
     currentFromNum,
     fromUnitId,
@@ -295,6 +305,12 @@ export default function Converter({
     activeCategory
   );
   const formattedToNum = formatNumber(rawCalculatedTo, decimals);
+  // The displayed result is rounded to the chosen precision; only show a
+  // strict "=" when the rounded display still equals the exact result.
+  const isExactDisplay =
+    hasFromValue &&
+    Number(formattedToNum.replace(/,/g, "")) === rawCalculatedTo;
+  const resultOperator = isExactDisplay ? "=" : "≈";
 
   const presets = PRESETS_BY_CATEGORY[activeCategory] || [1, 5, 10, 25, 50, 100];
   const cardTitle =
@@ -455,18 +471,26 @@ export default function Converter({
       {/* Readout & Formula */}
       <div className={styles.readout}>
         <div className={styles.readoutMain}>
-          {formatNumber(currentFromNum, decimals)} {currentFromUnit.symbol} ={" "}
-          {formattedToNum} {currentToUnit.symbol}
+          {hasFromValue ? (
+            <>
+              {formatNumber(currentFromNum, decimals)} {currentFromUnit.symbol}{" "}
+              {resultOperator} {formattedToNum} {currentToUnit.symbol}
+            </>
+          ) : (
+            <>Enter a value above to see the conversion</>
+          )}
         </div>
         <div className={styles.readoutFormula}>
-          {getFormulaString(
-            currentFromNum,
-            fromUnitId,
-            toUnitId,
-            activeCategory,
-            rawCalculatedTo,
-            formattedToNum
-          )}
+          {hasFromValue
+            ? getFormulaString(
+                currentFromNum,
+                fromUnitId,
+                toUnitId,
+                activeCategory,
+                rawCalculatedTo,
+                formattedToNum
+              )
+            : ""}
         </div>
       </div>
     </div>

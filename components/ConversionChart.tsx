@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { formatNumber } from "@/lib/convert";
 import {
@@ -97,21 +97,9 @@ export default function ConversionChart({
     return rows;
   }, [defaultStart, defaultEnd, defaultStep, fromUnit, toUnit, category]);
 
-  // Auto-jump to page containing highlightValue if within range & search is empty
-  useEffect(() => {
-    if (search.trim() !== "") {
-      return;
-    }
-
-    if (highlightValue != null && !isNaN(highlightValue)) {
-      const rounded = Math.round(highlightValue);
-      const rowIndex = allRows.findIndex((row) => row.from === rounded);
-      if (rowIndex !== -1) {
-        const targetPage = Math.floor(rowIndex / pageSize) + 1;
-        setPage(targetPage);
-      }
-    }
-  }, [highlightValue, search, allRows, pageSize]);
+  // Note: the chart intentionally does NOT auto-paginate to the converter's
+  // current input value. It only highlights the matching row on whatever page
+  // the user is viewing, so typing in the converter never hijacks the table.
 
   // Filter based on user search term
   const filteredRows = useMemo(() => {
