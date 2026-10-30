@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     title: "About — Standards & Precision",
     description: "Learn about our editorial multi-unit converter, metrological standards, and mathematical accuracy commitment.",
     url: siteUrl("/about"),
+    images: [{ url: siteUrl("/opengraph-image"), width: 1200, height: 630, alt: "Free Unit Converter" }],
   },
 };
 

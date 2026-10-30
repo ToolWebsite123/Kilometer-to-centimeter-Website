@@ -53,6 +53,7 @@ export default function HomePage() {
         lead="Convert kilometers to centimeters instantly — 1 kilometer is exactly 100,000 centimeters — or switch tabs for weight, temperature, volume and time conversions."
         faqs={homeFAQs}
         faqIntro="Common questions about converting kilometers to centimeters."
+        schemaPath="/"
       >
         <section className="editorial-card">
           <h2>Kilometers to Centimeters — The Quick Answer</h2>

@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     title: "Length Converter — km, cm, m, Feet & Miles",
     description: "Free online length converter. Instantly convert between centimeters, meters, kilometers, inches, feet, yards, and miles with real-time accuracy.",
     url: siteUrl("/length-converter"),
+    images: [{ url: siteUrl("/opengraph-image"), width: 1200, height: 630, alt: "Free Unit Converter" }],
   },
 };
 

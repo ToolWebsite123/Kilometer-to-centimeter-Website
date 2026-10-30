@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title,
     description,
     url: siteUrl("/privacy-policy"),
+    images: [{ url: siteUrl("/opengraph-image"), width: 1200, height: 630, alt: "Free Unit Converter" }],
   },
 };
 

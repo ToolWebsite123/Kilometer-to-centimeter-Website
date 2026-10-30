@@ -60,10 +60,12 @@ export function generateMetadata({ params }: PageProps): Metadata {
         title,
         description,
         url: siteUrl(`/${numVal}-kg-to-lbs`),
+        images: [{ url: siteUrl("/opengraph-image"), width: 1200, height: 630, alt: "Free Unit Converter" }],
       },
       twitter: {
         title,
         description,
+        images: [siteUrl("/opengraph-image")],
       },
     };
   }
@@ -89,10 +91,12 @@ export function generateMetadata({ params }: PageProps): Metadata {
         title,
         description,
         url: siteUrl(`/${numVal}-lbs-to-kg`),
+        images: [{ url: siteUrl("/opengraph-image"), width: 1200, height: 630, alt: "Free Unit Converter" }],
       },
       twitter: {
         title,
         description,
+        images: [siteUrl("/opengraph-image")],
       },
     };
   }

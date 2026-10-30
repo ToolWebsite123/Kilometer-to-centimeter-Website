@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     title: "Temperature Converter — °C, °F & Kelvin",
     description: "Free online temperature scale converter. Instantly convert between Celsius (°C), Fahrenheit (°F), and Kelvin (K) with exact offset formulas.",
     url: siteUrl("/temperature-converter"),
+    images: [{ url: siteUrl("/opengraph-image"), width: 1200, height: 630, alt: "Free Unit Converter" }],
   },
 };
 

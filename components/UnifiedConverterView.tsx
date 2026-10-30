@@ -12,6 +12,7 @@ import {
   faqIntroForCategory,
   type FAQItem,
 } from "@/lib/faqs";
+import { siteUrl } from "@/lib/site";
 import styles from "@/app/page.module.css";
 
 interface UnifiedConverterViewProps {
@@ -22,6 +23,7 @@ interface UnifiedConverterViewProps {
   lead?: string;
   faqs?: FAQItem[];
   faqIntro?: string;
+  schemaPath?: string;
   children?: React.ReactNode;
 }
 
@@ -33,6 +35,7 @@ export default function UnifiedConverterView({
   lead,
   faqs,
   faqIntro,
+  schemaPath,
   children,
 }: UnifiedConverterViewProps = {}) {
   const router = useRouter();
@@ -70,9 +73,47 @@ export default function UnifiedConverterView({
     symbol: toUnit,
   };
 
+  const pagePath = schemaPath ?? `/${initialCategory}-converter`;
+  const isHomePage = pagePath === "/";
+
   return (
     <div className={styles.pageLayout}>
       <div className={styles.mainColumn}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: title || "Free Multi-Unit Converter",
+              url: siteUrl(pagePath),
+              applicationCategory: "UtilitiesApplication",
+              operatingSystem: "Any",
+              offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+            }),
+          }}
+        />
+        {!isHomePage && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "Home", item: siteUrl("/") },
+                  {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: `${defaultCatInfo.name} Converter`,
+                    item: siteUrl(pagePath),
+                  },
+                ],
+              }),
+            }}
+          />
+        )}
+
         {/* Hero Section with Category Tabs & Converter */}
         <section className={styles.heroSection}>
           <span className="editorial-tag">Precision Utility</span>

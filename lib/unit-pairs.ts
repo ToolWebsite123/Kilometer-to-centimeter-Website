@@ -53,7 +53,7 @@ export const unitPairs: UnitPair[] = [
     fromLabel: "Kilograms",
     toLabel: "Grams",
     factor: 1000,
-    description: "Convert kilograms (kg) to grams (grams) instantly using our fast mass conversion calculator.",
+    description: "Convert kilograms (kg) to grams (g) instantly using our fast mass conversion calculator.",
   },
   {
     slug: "grams-to-kg",
@@ -62,7 +62,7 @@ export const unitPairs: UnitPair[] = [
     fromLabel: "Grams",
     toLabel: "Kilograms",
     factor: 0.001,
-    description: "Convert grams (grams) to kilograms (kg) with accuracy using our real-time weight converter.",
+    description: "Convert grams (g) to kilograms (kg) with accuracy using our real-time weight converter.",
   },
   {
     slug: "kg-to-oz",
@@ -89,7 +89,7 @@ export const unitPairs: UnitPair[] = [
     fromLabel: "Kilograms",
     toLabel: "Stone",
     factor: 0.157473044418,
-    description: "Convert kilograms (kg) to stone (stone) with our real-time mass calculator and lookup charts.",
+    description: "Convert kilograms (kg) to stone (st) with our real-time mass calculator and lookup charts.",
   },
   {
     slug: "stone-to-kg",
@@ -98,7 +98,7 @@ export const unitPairs: UnitPair[] = [
     fromLabel: "Stone",
     toLabel: "Kilograms",
     factor: 6.35029318,
-    description: "Convert stone (stone) to kilograms (kg) easily using our precise weight converter.",
+    description: "Convert stone (st) to kilograms (kg) easily using our precise weight converter.",
   },
   {
     slug: "grams-to-ounces",

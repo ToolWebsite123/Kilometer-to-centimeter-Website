@@ -41,10 +41,12 @@ export function generateMetadata({ params }: PageProps): Metadata {
       title,
       description,
       url: siteUrl(`/${CATEGORY}/${pair.slug}`),
+      images: [{ url: siteUrl("/opengraph-image"), width: 1200, height: 630, alt: "Free Unit Converter" }],
     },
     twitter: {
       title,
       description,
+      images: [siteUrl("/opengraph-image")],
     },
   };
 }

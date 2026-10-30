@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     title: "Volume Converter — Liters, Gallons & Cups",
     description: "Free online volume unit converter. Easily convert between liters, gallons, milliliters, fluid ounces, cups, pints, quarts, cubic meters, and cubic feet.",
     url: siteUrl("/volume-converter"),
+    images: [{ url: siteUrl("/opengraph-image"), width: 1200, height: 630, alt: "Free Unit Converter" }],
   },
 };
 

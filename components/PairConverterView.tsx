@@ -7,6 +7,7 @@ import ConversionChart from "@/components/ConversionChart";
 import PopularConversions from "@/components/PopularConversions";
 import FAQSection from "@/components/FAQSection";
 import { buildPairFAQs } from "@/lib/faqs";
+import { siteUrl } from "@/lib/site";
 import { UnitPair } from "@/lib/unit-pairs";
 import { CategoryId } from "@/lib/categories";
 import styles from "@/app/page.module.css";
@@ -33,6 +34,40 @@ export default function PairConverterView({
           <span className="editorial-tag">Programmatic Conversion</span>
           <h1>{pair.fromLabel} to {pair.toLabel} Converter</h1>
           <p className="lead">{pair.description}</p>
+
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "WebApplication",
+                name: `${pair.fromLabel} to ${pair.toLabel} Converter`,
+                url: siteUrl(`/${category}/${pair.slug}`),
+                applicationCategory: "UtilitiesApplication",
+                operatingSystem: "Any",
+                offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+              }),
+            }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "Home", item: siteUrl("/") },
+                  { "@type": "ListItem", position: 2, name: categoryName, item: siteUrl(categoryUrl) },
+                  {
+                    "@type": "ListItem",
+                    position: 3,
+                    name: `${pair.fromLabel} to ${pair.toLabel}`,
+                    item: siteUrl(`/${category}/${pair.slug}`),
+                  },
+                ],
+              }),
+            }}
+          />
 
           <Converter
             key={pair.slug}
