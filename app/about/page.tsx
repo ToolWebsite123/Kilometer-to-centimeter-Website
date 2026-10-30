@@ -1,11 +1,20 @@
 import type { Metadata } from "next";
+import { siteUrl } from "@/lib/site";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About Free Unit Converter — Standards & Precision",
+  title: "About — Standards & Precision",
   description:
     "Learn about our editorial multi-unit converter, metrological standards, and mathematical accuracy commitment.",
   keywords: ["about unit converter", "weight conversion standards", "metrology standards", "conversion math accuracy"],
+  alternates: {
+    canonical: siteUrl("/about"),
+  },
+  openGraph: {
+    title: "About — Standards & Precision",
+    description: "Learn about our editorial multi-unit converter, metrological standards, and mathematical accuracy commitment.",
+    url: siteUrl("/about"),
+  },
 };
 
 export default function AboutPage() {
@@ -30,7 +39,7 @@ export default function AboutPage() {
         <ul>
           <li><strong>Lightweight & Fast:</strong> Zero external UI framework bloat. Built purely with Next.js App Router, TypeScript, and vanilla CSS Modules.</li>
           <li><strong>Real-Time Two-Way Conversion:</strong> Instant calculations as you type in either direction without requiring form submission.</li>
-          <li><strong>Static HTML Export:</strong> Fully static pre-rendered site delivering sub-second load times and offline performance.</li>
+          <li><strong>Static HTML Export:</strong> Fully static pre-rendered site delivering sub-second load times.</li>
           <li><strong>Privacy First:</strong> All conversions execute locally in your web browser. No user data or input values are transmitted or logged.</li>
         </ul>
 
@@ -48,7 +57,7 @@ export default function AboutPage() {
 
         <h2>Contact & Inquiries</h2>
         <p>
-          For suggestions or feedback regarding our calculations, please return to our main converter.
+          We do not currently publish an email address for suggestions or feedback. A contact address will be published here, and on our Privacy Policy page, together with the site&apos;s own domain as soon as it is available.
         </p>
       </section>
 
