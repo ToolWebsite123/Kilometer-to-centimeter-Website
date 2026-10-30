@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
+import { siteUrl } from "@/lib/site";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Terms of Service — Free Unit Converter",
   description: "Terms of service and usage conditions for Free Unit Converter.",
+  alternates: {
+    canonical: siteUrl("/terms"),
+  },
+  openGraph: {
+    title: "Terms of Service — Free Unit Converter",
+    description: "Terms of service and usage conditions for Free Unit Converter.",
+    url: siteUrl("/terms"),
+  },
 };
 
 export default function TermsPage() {

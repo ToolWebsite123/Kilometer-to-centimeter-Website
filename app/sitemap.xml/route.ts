@@ -1,10 +1,13 @@
 import { unitPairs, getPairCategory } from "@/lib/unit-pairs";
+import { SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-static";
 
 export async function GET() {
-  const baseUrl = "https://kgtolbsconverter.org";
-  const lastModified = "2026-01-01T00:00:00.000Z";
+  const baseUrl = SITE_URL;
+  // Static export: this runs at build time, so lastmod is the build date —
+  // a real date that moves with every deployment instead of a placeholder.
+  const lastModified = new Date().toISOString();
 
   const staticUrls = [
     { url: `${baseUrl}`, priority: "1.0", changefreq: "daily" },
@@ -14,6 +17,8 @@ export async function GET() {
     { url: `${baseUrl}/volume-converter`, priority: "0.8", changefreq: "daily" },
     { url: `${baseUrl}/time-converter`, priority: "0.8", changefreq: "daily" },
     { url: `${baseUrl}/about`, priority: "0.5", changefreq: "monthly" },
+    { url: `${baseUrl}/privacy-policy`, priority: "0.3", changefreq: "yearly" },
+    { url: `${baseUrl}/terms`, priority: "0.3", changefreq: "yearly" },
   ];
 
   const convertUrls = unitPairs.map((pair) => ({

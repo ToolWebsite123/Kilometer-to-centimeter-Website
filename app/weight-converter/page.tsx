@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { siteUrl } from "@/lib/site";
 import UnifiedConverterView from "@/components/UnifiedConverterView";
 
 export const metadata: Metadata = {
-  title: "Weight Converter - Convert Kilograms, Pounds, Grams, Ounces & Stone",
+  title: "Weight Converter — kg to lbs & More Units",
   description:
     "Free online weight and mass converter. Convert between kilograms, pounds, grams, ounces, stone, and metric tons with instant metrological accuracy.",
   keywords: [
@@ -13,6 +14,14 @@ export const metadata: Metadata = {
     "pounds to grams",
     "mass converter",
   ],
+  alternates: {
+    canonical: siteUrl("/weight-converter"),
+  },
+  openGraph: {
+    title: "Weight Converter — kg to lbs & More Units",
+    description: "Free online weight and mass converter. Convert between kilograms, pounds, grams, ounces, stone, and metric tons with instant metrological accuracy.",
+    url: siteUrl("/weight-converter"),
+  },
 };
 
 export default function WeightConverterPage() {

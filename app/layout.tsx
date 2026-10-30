@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kgtolbsconverter.org"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Free Unit Converter - Length, Weight, Temperature, Volume & Time",
     template: "%s | Free Unit Converter",
@@ -29,14 +30,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://kgtolbsconverter.org",
+    url: SITE_URL,
     title: "Free Unit Converter - Length, Weight, Temperature, Volume & Time",
     description:
       "Instant multi-category conversion between length, weight, temperature, volume, and time units with full accuracy and reference tables.",
     siteName: "Free Unit Converter",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Free Unit Converter",
     description: "Instant real-time conversion across Length, Weight, Temperature, Volume & Time.",
   },

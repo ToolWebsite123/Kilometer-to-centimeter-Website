@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { unitPairs, getPairCategory } from "@/lib/unit-pairs";
+import { siteUrl } from "@/lib/site";
 import PairConverterView from "@/components/PairConverterView";
 
 interface PageProps {
@@ -28,15 +29,18 @@ export function generateMetadata({ params }: PageProps): Metadata {
   }
 
   const title = `Convert ${pair.fromLabel} to ${pair.toLabel} (${pair.fromUnit} to ${pair.toUnit})`;
-  const description = `${pair.description} Check the exact mathematical formulas, conversion factors, and lookup charts.`;
+  const description = `${pair.description} See the formula, conversion factor and lookup chart.`;
 
   return {
     title,
     description,
+    alternates: {
+      canonical: siteUrl(`/${CATEGORY}/${pair.slug}`),
+    },
     openGraph: {
       title,
       description,
-      url: `https://kgtolbsconverter.org/${CATEGORY}/${pair.slug}`,
+      url: siteUrl(`/${CATEGORY}/${pair.slug}`),
     },
     twitter: {
       title,

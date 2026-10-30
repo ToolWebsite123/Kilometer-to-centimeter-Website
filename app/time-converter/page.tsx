@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { siteUrl } from "@/lib/site";
 import UnifiedConverterView from "@/components/UnifiedConverterView";
 
 export const metadata: Metadata = {
-  title: "Time Converter - Convert Seconds, Minutes, Hours, Days, Weeks & Years",
+  title: "Time Converter — Hours, Days & Years",
   description:
     "Free online time unit converter. Fast, accurate conversions between seconds, milliseconds, minutes, hours, days, weeks, months, years, decades, and centuries.",
   keywords: [
@@ -13,6 +14,14 @@ export const metadata: Metadata = {
     "years to days",
     "time calculator",
   ],
+  alternates: {
+    canonical: siteUrl("/time-converter"),
+  },
+  openGraph: {
+    title: "Time Converter — Hours, Days & Years",
+    description: "Free online time unit converter. Fast, accurate conversions between seconds, milliseconds, minutes, hours, days, weeks, months, years, decades, and centuries.",
+    url: siteUrl("/time-converter"),
+  },
 };
 
 export default function TimeConverterPage() {

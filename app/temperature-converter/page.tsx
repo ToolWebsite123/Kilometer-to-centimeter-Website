@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { siteUrl } from "@/lib/site";
 import UnifiedConverterView from "@/components/UnifiedConverterView";
 
 export const metadata: Metadata = {
-  title: "Temperature Converter - Convert Celsius, Fahrenheit & Kelvin",
+  title: "Temperature Converter — °C, °F & Kelvin",
   description:
     "Free online temperature scale converter. Instantly convert between Celsius (°C), Fahrenheit (°F), and Kelvin (K) with exact offset formulas.",
   keywords: [
@@ -12,6 +13,14 @@ export const metadata: Metadata = {
     "celsius to kelvin",
     "temp calculator",
   ],
+  alternates: {
+    canonical: siteUrl("/temperature-converter"),
+  },
+  openGraph: {
+    title: "Temperature Converter — °C, °F & Kelvin",
+    description: "Free online temperature scale converter. Instantly convert between Celsius (°C), Fahrenheit (°F), and Kelvin (K) with exact offset formulas.",
+    url: siteUrl("/temperature-converter"),
+  },
 };
 
 export default function TemperatureConverterPage() {

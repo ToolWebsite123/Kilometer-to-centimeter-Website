@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { siteUrl } from "@/lib/site";
 import UnifiedConverterView from "@/components/UnifiedConverterView";
 
 export const metadata: Metadata = {
-  title: "Volume Converter - Convert Liters, Gallons, Milliliters, Cups & Quarts",
+  title: "Volume Converter — Liters, Gallons & Cups",
   description:
     "Free online volume unit converter. Easily convert between liters, gallons, milliliters, fluid ounces, cups, pints, quarts, cubic meters, and cubic feet.",
   keywords: [
@@ -13,6 +14,14 @@ export const metadata: Metadata = {
     "cups to ml",
     "liquid converter",
   ],
+  alternates: {
+    canonical: siteUrl("/volume-converter"),
+  },
+  openGraph: {
+    title: "Volume Converter — Liters, Gallons & Cups",
+    description: "Free online volume unit converter. Easily convert between liters, gallons, milliliters, fluid ounces, cups, pints, quarts, cubic meters, and cubic feet.",
+    url: siteUrl("/volume-converter"),
+  },
 };
 
 export default function VolumeConverterPage() {
