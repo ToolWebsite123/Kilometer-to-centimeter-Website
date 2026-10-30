@@ -7,6 +7,11 @@ import ConversionChart from "@/components/ConversionChart";
 import PopularConversions from "@/components/PopularConversions";
 import FAQSection from "@/components/FAQSection";
 import { CategoryId, CATEGORIES } from "@/lib/categories";
+import {
+  faqsForCategory,
+  faqIntroForCategory,
+  type FAQItem,
+} from "@/lib/faqs";
 import styles from "@/app/page.module.css";
 
 interface UnifiedConverterViewProps {
@@ -15,6 +20,8 @@ interface UnifiedConverterViewProps {
   initialToUnit?: string;
   title?: string;
   lead?: string;
+  faqs?: FAQItem[];
+  faqIntro?: string;
   children?: React.ReactNode;
 }
 
@@ -24,6 +31,8 @@ export default function UnifiedConverterView({
   initialToUnit,
   title,
   lead,
+  faqs,
+  faqIntro,
   children,
 }: UnifiedConverterViewProps = {}) {
   const router = useRouter();
@@ -156,7 +165,10 @@ export default function UnifiedConverterView({
           highlightValue={fromValue}
         />
 
-        <FAQSection />
+        <FAQSection
+          faqs={faqs ?? faqsForCategory(initialCategory)}
+          intro={faqIntro ?? faqIntroForCategory(initialCategory)}
+        />
       </div>
 
       {/* Right Sidebar synchronized with active category tab */}

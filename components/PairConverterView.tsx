@@ -5,6 +5,8 @@ import Link from "next/link";
 import Converter from "@/components/Converter";
 import ConversionChart from "@/components/ConversionChart";
 import PopularConversions from "@/components/PopularConversions";
+import FAQSection from "@/components/FAQSection";
+import { buildPairFAQs } from "@/lib/faqs";
 import { UnitPair } from "@/lib/unit-pairs";
 import { CategoryId } from "@/lib/categories";
 import styles from "@/app/page.module.css";
@@ -85,6 +87,11 @@ export default function PairConverterView({
                 : `Reference lookup table for various conversions from 1 ${pair.fromUnit} up to 1000 ${pair.fromUnit}.`
             }
             highlightValue={fromValue}
+          />
+
+          <FAQSection
+            faqs={buildPairFAQs(pair, category)}
+            intro={`Common questions about converting ${pair.fromLabel.toLowerCase()} to ${pair.toLabel.toLowerCase()}.`}
           />
 
           <p style={{ marginTop: "2rem" }}>

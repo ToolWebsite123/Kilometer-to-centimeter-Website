@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { siteUrl } from "@/lib/site";
 import Link from "next/link";
 import UnifiedConverterView from "@/components/UnifiedConverterView";
+import { homeFAQs } from "@/lib/faqs";
 
 const title = "Kilometer to Centimeter Converter — km to cm";
 const description =
@@ -50,6 +51,8 @@ export default function HomePage() {
         initialToUnit="cm"
         title="Kilometer to Centimeter Converter"
         lead="Convert kilometers to centimeters instantly — 1 kilometer is exactly 100,000 centimeters — or switch tabs for weight, temperature, volume and time conversions."
+        faqs={homeFAQs}
+        faqIntro="Common questions about converting kilometers to centimeters."
       >
         <section className="editorial-card">
           <h2>Kilometers to Centimeters — The Quick Answer</h2>
